@@ -1,0 +1,17 @@
+﻿@using Everynote.BusinessLayer
+@using Everynote.Entities
+
+@{
+    CategoryManager categoryManager = new CategoryManager();
+    List<Category> categories = categoryManager.GetAllCategories();
+}
+
+<p class="lead">Kategoriler</p>
+<div class="list-group">
+    <a href="@Url.Action("Index","Home")" class="list-group-item"><span clas="glyphicon glyphicon-arrow-right"></span> Tümü</a>
+    @foreach (var item in categories)
+    {
+        <a href="/Home/ByCategory/@item.Id" class="list-group-item" title="@item.Description"><span class="glyphicon glyphicon-arrow-right"></span> @item.Title </a>
+    }
+
+</div>

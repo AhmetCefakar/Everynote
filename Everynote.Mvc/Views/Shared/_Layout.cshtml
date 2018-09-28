@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+    <!-- Custom CSS -->
+    <link href="~/Content/shop-homepage.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Menü</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Yönet</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-star-empty"></span> En Beğenilenler</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-th-list"></span> Son Yazılar</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span> Hakkında</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><i class="glyphicon glyphicon-log-in"></i> Giriş</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-log-out"></i> Çıkış</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-user"></i> Üye Ol</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-user"></i> Kullanıcı Adı</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <h4>Consectetur adipiscing elit fusce vel.</h4>
+                    <hr />
+                    <a href="">Amet consectetur</a><br />
+                    <a href="">consectetur Amet</a><br />
+                    <a href="">Amet consectetur </a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h4>Amet, consectetur adipiscing elit.</h4>
+                    <hr />
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h4>E-bülte Üyeliği</h4>
+                    <hr />
+                    <p>Sapien elit in malesuada semper mi, id sollicitudin urna fermentum.</p>
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Epostanı Gir">
+                            <span class="input-group-btn ">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="glyphicon glyphicon-send" ></i>
+                                    Yolla
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>
