@@ -17,6 +17,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    @RenderSection("csses", false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -33,9 +35,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Yönet</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-star-empty"></span> En Beğenilenler</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-th-list"></span> Son Yazılar</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span> Hakkında</a></li>
+                    <li><a href="/Home/MostLiked"><span class="glyphicon glyphicon-star-empty"></span> En Beğenilenler</a></li>
+                    <li><a href="/Home/Index"><span class="glyphicon glyphicon-th-list"></span> Son Yazılar</a></li>
+                    <li><a href="/Home/About"><span class="glyphicon glyphicon-info-sign"></span> Hakkında</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -74,7 +76,7 @@
                             <input type="text" class="form-control" placeholder="Epostanı Gir">
                             <span class="input-group-btn ">
                                 <button class="btn btn-primary" type="button">
-                                    <i class="glyphicon glyphicon-send" ></i>
+                                    <i class="glyphicon glyphicon-send"></i>
                                     Yolla
                                 </button>
                             </span>
@@ -87,5 +89,6 @@
 
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", false)
 </body>
 </html>

@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+<link href="~/Content/login-register.css" rel="stylesheet" />
+@model Everynote.Mvc.ViewModel.RegisterViewModel
+
+@{
+    ViewBag.Tile = "Giriş Sayfası";
+}
+
+@section csses {
+    <style type="text/css">
+        .validation-summary-errors {
+            border: 2px dotted #A94442;
+            background-color: #D76663;
+            border-radius: 8px;
+        }
+
+            .validation-summary-errors ul {
+                list-style: none;
+                padding: 10px;
+                color: white;
+            }
+    </style>
+}
+
+@*'https://bootsnipp.com/snippets/pjDne' sayfasındaki tasarım kullanılmıştır*@
+
+
+
+@section scripts {
+    <script type="text/javascript">
+
+        window.addEventListener('load', function () {
+            var footerElement = document.querySelector('footer');
+            //var hrElement = document.querySelector('footer').previousSibling;
+            footerElement.style = 'display: none';
+            //hrElement.style = 'display: none';
+
+        });
+    </script>
+}

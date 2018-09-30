@@ -20,6 +20,9 @@ namespace Everynote.DataAccessLayer.Abstract
         // 'IQueryable' ile DB'ye sorgu atılmadan sorgu döndürülebilir
         List<T> List(Expression<Func<T, bool>> where);
 
+        // Todo: Under IRepository -> New'lenebilir bir T tipinden Entity sınıfının querable listesini Expression ifadesine göre filtreleyip geriye döndüren metod.
+        IQueryable<T> ListQueryable();
+
         // Todo: Under IRepository -> New'lenebilir bir T tipinden Entity sınıfını türünden Expression ifadesine göre tek kayıt ya da null değer döndüren metod.
         T Find(Expression<Func<T, bool>> where);
 

@@ -43,6 +43,15 @@ namespace Everynote.DataAccessLayer.EntityFramework
             return _objectSet.Where(where).ToList();
         }
 
+        /// <summary>
+        /// New'lenebilir bir T tipinden Entity sınıfının listesini Queryable olarak geriye döndüren metod.
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<T> ListQueryable()
+        {
+            return _objectSet.AsQueryable();
+        }
+
         public T Find(Expression<Func<T, bool>> where)
         {
             return _objectSet.FirstOrDefault(where);
@@ -69,5 +78,6 @@ namespace Everynote.DataAccessLayer.EntityFramework
         {
             return context.SaveChanges();
         }
+        
     }
 }

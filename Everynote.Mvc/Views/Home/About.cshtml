@@ -1,0 +1,32 @@
+﻿@using Everynote.BusinessLayer
+@using Everynote.Entities
+@model List<Note>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            @*Kategoriler listesinin veritabanından çekilerek oluşturulmasını sağlayan partialView*@
+            @Html.Partial("_PartialCategories")
+        </div>
+
+        <div class="col-md-9">
+            <!--Carousel -->
+            <div class="row">
+                <h2>Amet, consectetur adipiscing elit.</h2>
+                <hr />
+                <img src="http://placehold.it/500x250" class="center-block img-responsive img-rounded img-thumbnail" alt="Alternate Text" />
+                <hr />
+                <p>Scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue.</p>
+                <p>Scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue.</p>
+                <p>Scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue.</p>
+                <p>Scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue.</p>
+                <p>Scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue.</p>
+            </div>
+        </div>
+    </div>
+</div>
