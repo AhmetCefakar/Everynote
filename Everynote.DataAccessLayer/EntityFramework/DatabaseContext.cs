@@ -16,12 +16,11 @@ namespace Everynote.DataAccessLayer.EntityFramework
         }
 
         // EF'ye tabloların sınıflarının tanıtılması
-        public DbSet<EverynoteUser> EverynoteUser { get; set; }
+        public DbSet<User> EverynoteUser { get; set; }
         public DbSet<Note> Note { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Liked> Liked { get; set; }
-
     }
 
     /// <summary>
@@ -32,8 +31,8 @@ namespace Everynote.DataAccessLayer.EntityFramework
         protected override void Seed(DatabaseContext context)
         {
             #region EverynoteUser Table
-            List<EverynoteUser> userList = new List<EverynoteUser> {
-                new EverynoteUser{
+            List<User> userList = new List<User> {
+                new User{
                     Name = "Ahmet",
                     Surname = "Cefakar",
                     Email = "ahmetcefakar@hotmail.com",
@@ -45,7 +44,7 @@ namespace Everynote.DataAccessLayer.EntityFramework
                     CreatedOn = DateTime.Now,
                     CreatedUserName = "ahmet"
                 },
-                new EverynoteUser
+                new User
                 {
                     Name = "Elif",
                     Surname = "Doruk",

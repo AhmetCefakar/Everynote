@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Everynote.Mvc.ViewModel
+namespace Everynote.Entities.DTO
 {
-    public class RegisterViewModel
+    public class RegisterDTO
     {
         [DisplayName("Kullanıcı Adı"), 
             Required(ErrorMessage = "{0} alanı boş geçilemez"), 
@@ -28,7 +28,7 @@ namespace Everynote.Mvc.ViewModel
         [DisplayName("Şifre Tekrar"), 
             Required(ErrorMessage = "{0} alanı boş geçilemez"), 
             StringLength(25, ErrorMessage = "{0} en fazla olabilir. {1} karakter olmalı!"),
-            Compare("Password",ErrorMessage ="Şİfreler Uyuşmuyor!")]
+            Compare("Password",ErrorMessage ="{0} ve {1} Uyuşmuyor!")]
         public string RePassword { get; set; }
     }
 }

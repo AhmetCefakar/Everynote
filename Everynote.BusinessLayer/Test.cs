@@ -12,7 +12,7 @@ namespace Everynote.BusinessLayer
     public class Test
     {
         Repository<Category> repoCategory = new Repository<Category>();
-        Repository<EverynoteUser> repoUser = new Repository<EverynoteUser>();
+        Repository<User> repoUser = new Repository<User>();
         Repository<Note> repoNote = new Repository<Note>();
         Repository<Comment> repoComment = new Repository<Comment>();
 
@@ -24,7 +24,7 @@ namespace Everynote.BusinessLayer
 
         public void CommetInsertTest()
         {
-            EverynoteUser everynoteUser = repoUser.Find(q => q.Id == 1);
+            User everynoteUser = repoUser.Find(q => q.Id == 1);
             Note note = repoNote.Find(q => q.Id == 2);
 
             Comment comment = new Comment

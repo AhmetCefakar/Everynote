@@ -1,0 +1,39 @@
+﻿
+@{
+	ViewBag.Title = "RegisterOk";
+}
+
+@section csses {
+	<link href="~/Content/login-register.css" rel="stylesheet" />
+}
+
+<section class="login-info">
+	<div class="container">
+		<div class="row main">
+			<div class="form-header">
+				<h1 class="text-center">Yönlendiriliyorsun</h1>
+			</div>
+			<div class="main-content">
+				<div class="text-success">
+					<h2><span class="glyphicon glyphicon-ok">&nbsp;&nbsp;&nbsp;&nbsp;Kaydoldun!</span></h2>
+				</div>
+				<hr />
+				<p class="text-justify">
+					Eposta adresinize yollanan aktivasyon linki ile hesabınızı aktif ediniz.
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section scripts {
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+			//$("footer").parent().hide();
+
+			setTimeout(function () {
+				window.location = "/Home/Index";
+			}, 3000);
+		});
+	</script>
+}

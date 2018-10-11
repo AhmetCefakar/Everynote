@@ -1,44 +1,70 @@
 ﻿
-@{
-    ViewBag.Title = "Register";
-}
-
-<link href="~/Content/login-register.css" rel="stylesheet" />
-@model Everynote.Mvc.ViewModel.RegisterViewModel
+@model Everynote.Entities.DTO.RegisterDTO
 
 @{
-    ViewBag.Tile = "Giriş Sayfası";
+	ViewBag.Tile = "Kayıt Sayfası";
 }
+
 
 @section csses {
-    <style type="text/css">
-        .validation-summary-errors {
-            border: 2px dotted #A94442;
-            background-color: #D76663;
-            border-radius: 8px;
-        }
-
-            .validation-summary-errors ul {
-                list-style: none;
-                padding: 10px;
-                color: white;
-            }
-    </style>
+	<link href="~/Content/login-register.css" rel="stylesheet" />
 }
 
 @*'https://bootsnipp.com/snippets/pjDne' sayfasındaki tasarım kullanılmıştır*@
 
 
+<section class="login-info">
+	<div class="container">
+		<div class="row main">
+			<div class="form-header">
+				<h1 class="text-center ">Kayıt formu </h1>
+			</div>
+			<div class="main-content">
+				@using (Html.BeginForm())
+				{
+					@Html.ValidationSummary(false) // Hata bilgilerinin ekranda liste lalinde gösterilmesini sağlayan kod
+					<div class="input-group ">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+						@Html.TextBoxFor(Model => Model.UserName, new { @class = "form-control", placeholder = "Kullanıcı Adınız" })
+						@*<input id="email" type="text" class="form-control" name="email" placeholder="Enter your Email">*@
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+						@Html.TextBoxFor(Model => Model.Email, new { @class = "form-control", placeholder = "Eposta Adresiniz" })
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+						@Html.TextBoxFor(Model => Model.Password, new { @class = "form-control", placeholder = "Şifre", type = "password" })
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+						@Html.TextBoxFor(Model => Model.RePassword, new { @class = "form-control", placeholder = "Şifre Tekrar", type = "password" })
+					</div>
+
+					<div class="form-group ">
+						<button type="submit" class="btn btn-danger btn-lg btn-block login-button">Kayıt Ol</button>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
 
 @section scripts {
-    <script type="text/javascript">
+	<script type="text/javascript">
 
-        window.addEventListener('load', function () {
-            var footerElement = document.querySelector('footer');
-            //var hrElement = document.querySelector('footer').previousSibling;
-            footerElement.style = 'display: none';
-            //hrElement.style = 'display: none';
+		window.addEventListener('load', function () {
+			var footerElement = document.querySelector('footer');
+			//var hrElement = document.querySelector('footer').previousSibling;
+			footerElement.style = 'display: none';
+			//hrElement.style = 'display: none';
 
-        });
-    </script>
+		});
+	</script>
 }

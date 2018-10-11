@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Everynote.Mvc.ViewModel
+namespace Everynote.Entities.DTO
 {
-    public class LoginViewModel
+    public class LoginDTO
     {
         // '{0}' ile DisplayName, '{1}' ile property name belirtiliyor.
         [DisplayName("Kullanıcı Adı"), Required(ErrorMessage ="{0} alanı boş geçilemez"), StringLength(25)]

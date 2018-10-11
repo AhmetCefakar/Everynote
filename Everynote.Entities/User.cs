@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Everynote.Entities
 {
-    public class EverynoteUser : EverynoteEntityBase
+    public class User : EverynoteEntityBase
     {
-        [Required, StringLength(25)]
+        [StringLength(25)]
         public string Name { get; set; }
 
-        [Required, StringLength(25)]
+        [StringLength(25)]
         public string Surname { get; set; }
 
         [Required, StringLength(25)]

@@ -15,7 +15,7 @@ namespace Everynote.DataAccessLayer.EntityFramework
         protected static DatabaseContext context;
         private static readonly object _lockSync = new object();
 
-        // 'protected' ile sınıfın dışarıdan ram alanına çıkartılması engellenmiş oldu
+        // 'protected' ile sınıfın dışarıdan rem alanına çıkartılması engellenmiş oldu
         protected RepositoryBase()
         {
             if (context == null)

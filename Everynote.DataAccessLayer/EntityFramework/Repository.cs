@@ -60,12 +60,27 @@ namespace Everynote.DataAccessLayer.EntityFramework
         public int Insert(T obj)
         {
             _objectSet.Add(obj);
+
+			if (obj is EverynoteEntityBase)
+			{
+				EverynoteEntityBase baseEntity = obj as EverynoteEntityBase;
+				baseEntity.CreatedOn = DateTime.Now;
+				baseEntity.CreatedUserName = "System"; // Todo: işlem yapan kullanıcı adı yazılacak
+			}
+
             return Save();
         }
 
         public int Update(T obj)
         {
-            return Save();
+			if (obj is EverynoteEntityBase)
+			{
+				EverynoteEntityBase baseEntity = obj as EverynoteEntityBase;
+				baseEntity.ModifiedOn = DateTime.Now;
+				baseEntity.ModifiedUserName = "System"; // Todo: işlem yapan kullanıcı adı yazılacak
+			}
+
+			return Save();
         }
 
         public int Delete(T obj)

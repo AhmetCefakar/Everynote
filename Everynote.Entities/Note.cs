@@ -28,7 +28,7 @@ namespace Everynote.Entities
         //public int EverynoteUserId { get; set; }
 
         // Bir kategorinin birden çok notu vardır
-        public virtual EverynoteUser Owner { get; set; }
+        public virtual User Owner { get; set; }
         public virtual List<Comment> Comments { get; set; }
         public virtual Category Category { get; set; }
         public virtual List<Liked> Likes { get; set; }

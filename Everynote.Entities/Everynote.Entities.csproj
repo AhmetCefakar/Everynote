@@ -44,14 +44,17 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="Comment.cs" />
+    <Compile Include="DTO\LoginDTO.cs" />
+    <Compile Include="DTO\RegisterDTO.cs" />
     <Compile Include="EverynoteEntityBase.cs" />
-    <Compile Include="EverynoteUser.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="Liked.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ReadMe.txt" />
+    <Content Include="DTO\_ReadMe.txt" />
+    <Content Include="_ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

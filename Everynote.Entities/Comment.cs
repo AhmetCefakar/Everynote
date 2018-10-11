@@ -17,6 +17,6 @@ namespace Everynote.Entities
 
         // Bir kategorinin birden çok notu vardır
         public Note Note { get; set; }
-        public EverynoteUser Owner { get; set; }
+        public User Owner { get; set; }
     }
 }

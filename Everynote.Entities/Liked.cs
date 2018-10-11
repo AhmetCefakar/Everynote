@@ -18,6 +18,6 @@ namespace Everynote.Entities
         public int LikedUserId { get; set; }
 
         public Note Note { get; set; }
-        public EverynoteUser LikedUser { get; set; }
+        public User LikedUser { get; set; }
     }
 }
