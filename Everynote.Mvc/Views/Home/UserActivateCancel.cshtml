@@ -1,0 +1,44 @@
+﻿
+@using Everynote.Entities.Messages
+@model List<ErrorMessage>
+@{
+	ViewBag.Title = "Geçersiz Hesap";
+}
+
+@section csses {
+	<link href="~/Content/login-register.css" rel="stylesheet" />
+}
+
+<section class="login-info">
+	<div class="container">
+		<div class="row main">
+			<div class="form-header">
+				<h1 class="text-center">Yönlendiriliyorsunuz</h1>
+			</div>
+			<div class="main-content">
+				<div class="text-danger">
+					<h2><span class="glyphicon glyphicon-remove">&nbsp;&nbsp;&nbsp;Hesap Geçerli Değil!</span></h2>
+				</div>
+				<hr />
+				<p class="text-justify">
+					@foreach (ErrorMessage error in Model)
+					{
+						@error.Message <br/>
+					}
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section scripts {
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+			//$("footer").parent().hide();
+
+			setTimeout(function () {
+				window.location = "/Home/Index";
+			}, 3000);
+		});
+	</script>
+}

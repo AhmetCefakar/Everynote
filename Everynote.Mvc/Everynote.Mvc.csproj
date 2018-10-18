@@ -133,6 +133,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Init\WebCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +146,8 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\RegisterOk.cshtml" />
+    <Content Include="Views\Home\UserActivateOk.cshtml" />
+    <Content Include="Views\Home\UserActivateCancel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -162,6 +165,10 @@
     <ProjectReference Include="..\Everynote.BusinessLayer\Everynote.BusinessLayer.csproj">
       <Project>{d14a09f5-c2a0-4e14-b4c6-4c158a97ec93}</Project>
       <Name>Everynote.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Everynote.Common\Everynote.Common.csproj">
+      <Project>{b26fea5c-92a5-431b-934f-33a9dbbca924}</Project>
+      <Name>Everynote.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Everynote.Entities\Everynote.Entities.csproj">
       <Project>{029981c1-9833-4c6a-8257-655a1b16756f}</Project>

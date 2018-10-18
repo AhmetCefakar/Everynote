@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Everynote.Entities.Messages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,20 @@ namespace Everynote.BusinessLayer
 	{
 		public BusinessLayerResult()
 		{
-			Errors = new List<string>();
+			Errors = new List<ErrorMessage>();
 		}
 
-		public List<string> Errors { get; set; }
+		public List<ErrorMessage> Errors { get; set; }
 		public T Result { get; set; }
+
+		/// <summary>
+		/// Hata eklemeye sağlayan metod
+		/// </summary>
+		/// <param name="code">Hata Kodu</param>
+		/// <param name="message">Hata Açıklaması</param>
+		public void AddError(ErrorMessageCode code, string message)
+		{
+			Errors.Add(new ErrorMessage { Code = code, Message = message });
+		}
 	}
 }

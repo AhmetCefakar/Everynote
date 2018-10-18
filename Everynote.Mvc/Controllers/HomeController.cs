@@ -15,8 +15,8 @@ namespace Everynote.Mvc.Controllers
 		public ActionResult Index()
 		{
 			// Veritabanını yoksa oluşturan metod çağırılıyor
-			BusinessLayer.Test test = new BusinessLayer.Test();
-			test.CommetInsertTest();
+			//BusinessLayer.Test test = new BusinessLayer.Test();
+			//test.CommetInsertTest();
 
 			NoteManager noteManager = new NoteManager();
 			return View(noteManager.GetAllNotesQueryable().OrderByDescending(q => q.CreatedOn).ToList());
@@ -75,7 +75,13 @@ namespace Everynote.Mvc.Controllers
 
 				if (loginResult.Errors.Count > 0)
 				{
-					loginResult.Errors.ForEach(q => ModelState.AddModelError("", q)); // BLL'den gelen hatalar ModelState'e ekleniyor 
+					// Eğer kullanıcı aktif değilse ekranda kullanıcıya özel aktive etme butonu gösterilecek
+					if (loginResult.Errors.Find(q => q.Code == Entities.Messages.ErrorMessageCode.UserIsNotActive) != null)
+					{
+						ViewBag.ActiveLink = "http://www.google.com";
+					}
+
+					loginResult.Errors.ForEach(q => ModelState.AddModelError("", q.Message)); // BLL'den gelen hatalar ModelState'e ekleniyor 
 					return View(model);
 				}
 
@@ -87,8 +93,9 @@ namespace Everynote.Mvc.Controllers
 		}
 
 		// GET: Loginout, Login'i düşüren action
-		public ActionResult Loginout()
+		public ActionResult Logout()
 		{
+			Session.Clear();
 			return View();
 		}
 		#endregion
@@ -112,7 +119,7 @@ namespace Everynote.Mvc.Controllers
 
 				if (registerResult.Errors.Count > 0)
 				{
-					registerResult.Errors.ForEach(q => ModelState.AddModelError("", q)); // BLL'den gelen hatalar ModelState'e ekleniyor 
+					registerResult.Errors.ForEach(q => ModelState.AddModelError("", q.Message)); // BLL'den gelen hatalar ModelState'e ekleniyor 
 					return View(model);
 				}
 
@@ -124,19 +131,47 @@ namespace Everynote.Mvc.Controllers
 
 		public ActionResult RegisterOk()
 		{
-			return View();
+			return View(); //RedirectToAction("Index", "Home");
 		}
 
 		#endregion
 
 
+		#region UserActivate
 		// Kullanıcının kendini aktif etmesini sağlayan action
-		public ActionResult UserActivate(Guid guid)
+		public ActionResult UserActivate(Guid id)
 		{
-			// Kullanıcı aktivasyonu sağlanacak 
+			// Todo: Kullanıcı aktivasyonu sağlanacak 
+			EverynoteUserManager everynoteUserManager = new EverynoteUserManager();
+			BusinessLayerResult<User> resultUser = everynoteUserManager.ActivateUser(id);
 
+			if (resultUser.Errors.Count > 0)
+			{
+				TempData["Errors"] = resultUser.Errors;
+				return RedirectToAction("UserActivateCancel", "Home");
+			}
+
+			return RedirectToAction("UserActivateOk", "Home");
+		}
+
+		public ActionResult UserActivateOk()
+		{
 			return View();
 		}
+
+		public ActionResult UserActivateCancel()
+		{
+			List<Entities.Messages.ErrorMessage> errors = null;
+
+			if (TempData["Errors"] != null)
+			{
+				errors = TempData["Errors"] as List<Entities.Messages.ErrorMessage>;
+			}
+
+			return View(errors);
+		}
+		#endregion
+
 
 		#endregion
 

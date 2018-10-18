@@ -1,4 +1,5 @@
-﻿using Everynote.DataAccessLayer;
+﻿using Everynote.Common;
+using Everynote.DataAccessLayer;
 using Everynote.DataAccessLayer.Abstract;
 using Everynote.Entities;
 using System;
@@ -65,7 +66,7 @@ namespace Everynote.DataAccessLayer.EntityFramework
 			{
 				EverynoteEntityBase baseEntity = obj as EverynoteEntityBase;
 				baseEntity.CreatedOn = DateTime.Now;
-				baseEntity.CreatedUserName = "System"; // Todo: işlem yapan kullanıcı adı yazılacak
+				baseEntity.CreatedUserName = App.Common.GetCurruntUSerName();
 			}
 
             return Save();
@@ -77,7 +78,7 @@ namespace Everynote.DataAccessLayer.EntityFramework
 			{
 				EverynoteEntityBase baseEntity = obj as EverynoteEntityBase;
 				baseEntity.ModifiedOn = DateTime.Now;
-				baseEntity.ModifiedUserName = "System"; // Todo: işlem yapan kullanıcı adı yazılacak
+				baseEntity.ModifiedUserName = App.Common.GetCurruntUSerName();
 			}
 
 			return Save();

@@ -47,6 +47,8 @@
     <Compile Include="DTO\LoginDTO.cs" />
     <Compile Include="DTO\RegisterDTO.cs" />
     <Compile Include="EverynoteEntityBase.cs" />
+    <Compile Include="Messages\Enums.cs" />
+    <Compile Include="Messages\ErrorMessage.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Liked.cs" />
     <Compile Include="Note.cs" />

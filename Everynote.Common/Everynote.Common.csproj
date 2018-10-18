@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B29A9A0B-50E1-487C-89E2-6A1D0D851AC5}</ProjectGuid>
+    <ProjectGuid>{B26FEA5C-92A5-431B-934F-33A9DBBCA924}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Everynote.DataAccessLayer</RootNamespace>
-    <AssemblyName>Everynote.DataAccessLayer</AssemblyName>
+    <RootNamespace>Everynote.Common</RootNamespace>
+    <AssemblyName>Everynote.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,17 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="FakeData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FakeData.1.0.0\lib\FakeData.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,25 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IRepository.cs" />
-    <Compile Include="EntityFramework\DatabaseContext.cs" />
-    <Compile Include="EntityFramework\Repository.cs" />
-    <Compile Include="EntityFramework\RepositoryBase.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="BaseCommon.cs" />
+    <Compile Include="ICommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Everynote.Common\Everynote.Common.csproj">
-      <Project>{b26fea5c-92a5-431b-934f-33a9dbbca924}</Project>
-      <Name>Everynote.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Everynote.Entities\Everynote.Entities.csproj">
-      <Project>{029981c1-9833-4c6a-8257-655a1b16756f}</Project>
-      <Name>Everynote.Entities</Name>
-    </ProjectReference>
+    <Folder Include="Helper\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

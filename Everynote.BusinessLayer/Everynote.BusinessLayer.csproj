@@ -37,6 +37,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="SendFastEmail, Version=1.0.3.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendFastEmail.1.0.4\lib\net45\SendFastEmail.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -56,6 +59,10 @@
     <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Everynote.Common\Everynote.Common.csproj">
+      <Project>{b26fea5c-92a5-431b-934f-33a9dbbca924}</Project>
+      <Name>Everynote.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Everynote.DataAccessLayer\Everynote.DataAccessLayer.csproj">
       <Project>{b29a9a0b-50e1-487c-89e2-6a1d0d851ac5}</Project>
       <Name>Everynote.DataAccessLayer</Name>

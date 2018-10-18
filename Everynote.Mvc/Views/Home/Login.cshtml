@@ -20,8 +20,14 @@
 			<div class="main-content">
 				@using (Html.BeginForm())
 				{
-					@Html.ValidationSummary(false) // Hata bilgilerinin ekranda liste lalinde gösterilmesini sağlayan kod
+					
+					if (ViewBag.ActiveLink != null)
+					{ // Kullanıcı aktif değilse active etme link'i eklenecek
+						<a href="@ViewBag.ActiveLink" class="btn btn-primary">Hesabını Aktive Et</a>
+					}
 
+
+					@Html.ValidationSummary(false) // Hata bilgilerinin ekranda liste lalinde gösterilmesini sağlayan kod
 					<div class="input-group ">
 						<span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
 						@Html.TextBoxFor(Model => Model.UserName, new { @class = "form-control", placeholder = "Kullanıcı Adınız" })
