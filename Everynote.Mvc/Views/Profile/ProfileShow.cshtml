@@ -1,0 +1,54 @@
+﻿@using Everynote.Entities
+@model User
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+	<div class="row">
+		<h2>@ViewBag.Title</h2>
+		<hr />
+	</div>
+
+	<div class="raw">
+		<div class="col-md-2">
+			<img src="~/Images/@Model.ProfileImageFileName" class="img-circle" width="128" height="128" alt="Profile Image" />
+		</div>
+
+		<div class="col-md-8">
+			<h3>@(Model.Name + " " + Model.Surname)</h3>
+			<br />
+			<h6><b>User Name: </b>@Model.UserName</h6>
+			<h6><b>Email: </b>@Model.Email</h6>
+			<br />
+			<h6><a href="#">More...</a></h6>
+		</div>
+
+		<div class="col-md-2 text-right">
+			<div class="btn-group">
+				<a href="#" class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+					<span class="glyphicon glyphicon-cog">&nbsp;</span>
+					Options
+					<span class="glyphicon-cog"></span><span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="@Url.Action("ProfileEdit")">
+							<span class="glyphicon glyphicon-edit">&nbsp;</span> Edit
+						</a>
+					</li>
+					<li>
+						<a href="@Url.Action("ProfileDelete")" onclick="return confirm('Are You Sure Remove This Account?');">
+							<span class="glyphicon glyphicon-trash">&nbsp;</span> Delete
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+</div>

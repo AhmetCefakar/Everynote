@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using SendFastEmail.Models;
 using SendFastEmail.Enums;
 using System.Net.Mail;
+using Everynote.Entities.Enums;
 
 namespace Everynote.BusinessLayer
 {
@@ -54,6 +55,8 @@ namespace Everynote.BusinessLayer
 					UserName = registerDTO.UserName,
 					Email = registerDTO.Email,
 					Password = registerDTO.Password,
+					Gender = Gender.Woman,
+					ProfileImageFileName = "userWoman.png",
 					IsActive = false,
 					IsAdmin = false,
 					ActivateGuid = Guid.NewGuid()
@@ -63,13 +66,12 @@ namespace Everynote.BusinessLayer
 				if (dbResult > 0)
 				{
 					layerResult.Result = repoUser.Find(q => q.UserName == registerDTO.UserName && q.Email == registerDTO.Email && q.Password == registerDTO.Password);
-
-					// TODO: Hesap doğrulama mail'i atılacak
+					
 					// Yollanacak mail'in ayarlanması
-					string activateUrl = $"yourServerDomainAddress/Home/UserActivate/{layerResult.Result.ActivateGuid}";
+					string activateUrl = $"localhost:49952/User/UserActivate/{layerResult.Result.ActivateGuid}";
 					MailContent mailContent = new MailContent
 					{
-						From = new MailAddress("yourMailAddress"),
+						From = new MailAddress("YourMail"),
 						ToList = new List<MailAddress> { new MailAddress(layerResult.Result.Email.Trim()) },
 						Subject = "EveryNote Account Activation",
 						Body = $"Merhaba, {layerResult.Result.UserName}; <br/><br/> Hesabınızı aktifleştirmek için <a href='http://{activateUrl}' target = '_blank'>tıklayıyınız.</a>",
@@ -82,8 +84,8 @@ namespace Everynote.BusinessLayer
 							UseDefaultCredentials = false,
 							DeliveryMethod = SmtpDeliveryMethod.Network
 						},
-						Email = "yourMailAddress",
-						Password = "yourMailPassword"
+						Email = "YourMail",
+						Password = "YourPassword"
 					};
 
 					// Mail gönderme metodunun çağırılması ve sonucun 'MailSendResult' modeline atanması
@@ -145,5 +147,18 @@ namespace Everynote.BusinessLayer
 			return layerResult;
 		}
 
+		public BusinessLayerResult<User> GetUserById(int Id)
+		{
+			BusinessLayerResult<User> businessLayerResultUser = new BusinessLayerResult<User>();
+
+			businessLayerResultUser.Result = repoUser.Find(q => q.Id == Id);
+
+			if (businessLayerResultUser.Result == null)
+			{
+				businessLayerResultUser.AddError(ErrorMessageCode.UserNotFound, "Kullanıcı Bulunamadı");
+			}
+
+			return businessLayerResultUser;
+		}
 	}
 }

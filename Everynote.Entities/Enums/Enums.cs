@@ -1,5 +1,5 @@
 ﻿
-namespace Everynote.Entities.Messages
+namespace Everynote.Entities.Enums
 {
 	public enum ErrorMessageCode
 	{
@@ -9,6 +9,13 @@ namespace Everynote.Entities.Messages
 		UserNameOrPasswordWrong = 152,
 		CheckYourEmail = 153,
 		UserAlreadyActive = 154,
-		ActivateIdDoesNotExist = 155
+		ActivateIdDoesNotExist = 155,
+		UserNotFound = 156
+	}
+
+	public enum Gender
+	{
+		Man = 0,
+		Woman = 1
 	}
 }

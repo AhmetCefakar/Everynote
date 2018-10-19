@@ -1,6 +1,7 @@
 ﻿using Everynote.BusinessLayer;
 using Everynote.Entities;
 using Everynote.Entities.DTO;
+using Everynote.Entities.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,128 +57,19 @@ namespace Everynote.Mvc.Controllers
 			return View();
 		}
 
-		#region User Process
-		#region Login
-		// GET: Login, Login sayfası çağırıldığında çalışan action
-		public ActionResult Login()
+		// TestNotification
+		public ActionResult TestNotify()
 		{
-			return View();
-		}
-
-		// POST: Login, Login sayfası post olduğunda çalışan action
-		[HttpPost]
-		public ActionResult Login(LoginDTO model)
-		{
-			if (ModelState.IsValid)
+			SuccessViewModel model = new SuccessViewModel()
 			{
-				EverynoteUserManager userManager = new EverynoteUserManager();
-				BusinessLayerResult<User> loginResult = userManager.LoginUser(model);
-
-				if (loginResult.Errors.Count > 0)
-				{
-					// Eğer kullanıcı aktif değilse ekranda kullanıcıya özel aktive etme butonu gösterilecek
-					if (loginResult.Errors.Find(q => q.Code == Entities.Messages.ErrorMessageCode.UserIsNotActive) != null)
-					{
-						ViewBag.ActiveLink = "http://www.google.com";
-					}
-
-					loginResult.Errors.ForEach(q => ModelState.AddModelError("", q.Message)); // BLL'den gelen hatalar ModelState'e ekleniyor 
-					return View(model);
-				}
-
-				Session["login"] = loginResult.Result;
-				return RedirectToAction("Index", "Home");
-			}
-
-			return View(model);
+				Header = "Başarılı Mesaj denemesi",
+				Title = "Success Test",
+				RedirectingTimeout = 4000,
+				Items = new List<string> { "Test başarılı 1", "Test başarılı 2" }
+			};
+			
+			return View("Success", model);
 		}
-
-		// GET: Loginout, Login'i düşüren action
-		public ActionResult Logout()
-		{
-			Session.Clear();
-			return View();
-		}
-		#endregion
-
-		#region Register
-		// GET: Register
-		public ActionResult Register()
-		{
-			return View();
-		}
-
-		// POST: Register, Register sayfası post olduğunda çalışan action
-		[HttpPost]
-		public ActionResult Register(RegisterDTO model)
-		{
-			// Modelin annotation kurallarana uygunğu kontrol ediliyor
-			if (ModelState.IsValid)
-			{
-				EverynoteUserManager everynoteUserManager = new EverynoteUserManager();
-				BusinessLayerResult<User> registerResult = everynoteUserManager.RegisterUser(model);
-
-				if (registerResult.Errors.Count > 0)
-				{
-					registerResult.Errors.ForEach(q => ModelState.AddModelError("", q.Message)); // BLL'den gelen hatalar ModelState'e ekleniyor 
-					return View(model);
-				}
-
-				return RedirectToAction("RegisterOk", "Home");
-			}
-
-			return View(model);
-		}
-
-		public ActionResult RegisterOk()
-		{
-			return View(); //RedirectToAction("Index", "Home");
-		}
-
-		#endregion
-
-
-		#region UserActivate
-		// Kullanıcının kendini aktif etmesini sağlayan action
-		public ActionResult UserActivate(Guid id)
-		{
-			// Todo: Kullanıcı aktivasyonu sağlanacak 
-			EverynoteUserManager everynoteUserManager = new EverynoteUserManager();
-			BusinessLayerResult<User> resultUser = everynoteUserManager.ActivateUser(id);
-
-			if (resultUser.Errors.Count > 0)
-			{
-				TempData["Errors"] = resultUser.Errors;
-				return RedirectToAction("UserActivateCancel", "Home");
-			}
-
-			return RedirectToAction("UserActivateOk", "Home");
-		}
-
-		public ActionResult UserActivateOk()
-		{
-			return View();
-		}
-
-		public ActionResult UserActivateCancel()
-		{
-			List<Entities.Messages.ErrorMessage> errors = null;
-
-			if (TempData["Errors"] != null)
-			{
-				errors = TempData["Errors"] as List<Entities.Messages.ErrorMessage>;
-			}
-
-			return View(errors);
-		}
-		#endregion
-
-
-		#endregion
-
-
-
-
 
 	}
 }

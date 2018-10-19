@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Everynote.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,7 +16,9 @@ namespace Everynote.Entities
         [StringLength(25)]
         public string Surname { get; set; }
 
-        [Required, StringLength(25)]
+		public Gender Gender { get; set; }
+		
+		[Required, StringLength(25)]
         public string UserName { get; set; }
 
         [Required, StringLength(100)]
@@ -24,7 +27,10 @@ namespace Everynote.Entities
         [Required, StringLength(100)]
         public string Email { get; set; }
 
-        public bool IsActive { get; set; }
+		[StringLength(50)]
+		public string ProfileImageFileName { get; set; }
+
+		public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
 
         [Required]

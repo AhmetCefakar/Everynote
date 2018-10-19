@@ -1,4 +1,5 @@
-﻿using Everynote.Entities.Messages;
+﻿using Everynote.Entities.Enums;
+using Everynote.Entities.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;

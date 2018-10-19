@@ -1,0 +1,51 @@
+﻿
+@using Everynote.Entities.Messages
+@model InfoViewModel
+
+@{
+	ViewBag.Title = Model.Title;
+}
+
+@section csses {
+	<link href="~/Content/login-register.css" rel="stylesheet" />
+}
+
+<section class="login-info">
+	<div class="container">
+		<div class="row main">
+			<div class="form-header">
+				<h1 class="text-center">@Model.Header</h1>
+			</div>
+			<div class="main-content">
+				<div class="text-info">
+					<h2><span class="glyphicon glyphicon-info-sign">&nbsp;&nbsp;&nbsp;&nbsp;@Model.Title</span></h2>
+				</div>
+				<hr />
+				<p class="text-justify text-info">
+					@foreach (string item in Model.Items)
+					{
+						@item <br />
+					}
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section scripts {
+	<script type="text/javascript">
+		window.addEventListener('load', function () {
+
+			@if (Model.IsRedirecting) {
+				@Html.Raw("setTimeout(function () {" +
+						"window.location ='" + Model.RedirectingUrl + "'" +
+						"}," + Model.RedirectingTimeout + ");"
+			   );
+			}
+
+			//setTimeout(function () {
+			//	window.location = "/Home/Index";
+			//}, 3000);
+		});
+	</script>
+}
