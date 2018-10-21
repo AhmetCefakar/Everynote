@@ -10,7 +10,9 @@ namespace Everynote.Entities.Enums
 		CheckYourEmail = 153,
 		UserAlreadyActive = 154,
 		ActivateIdDoesNotExist = 155,
-		UserNotFound = 156
+		UserNotFound = 156,
+		CouldNotUpdate = 157,
+		CouldNotRemove = 158
 	}
 
 	public enum Gender

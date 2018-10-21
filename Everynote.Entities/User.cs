@@ -1,6 +1,7 @@
 ﻿using Everynote.Entities.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -10,21 +11,21 @@ namespace Everynote.Entities
 {
     public class User : EverynoteEntityBase
     {
-        [StringLength(25)]
+        [DisplayName("Ad") ,StringLength(25)]
         public string Name { get; set; }
 
-        [StringLength(25)]
+        [DisplayName("Soyad"), StringLength(25)]
         public string Surname { get; set; }
 
 		public Gender Gender { get; set; }
 		
-		[Required, StringLength(25)]
+		[Required, DisplayName("Kullanıcı Adı"), StringLength(25)]
         public string UserName { get; set; }
 
-        [Required, StringLength(100)]
+        [Required, DisplayName("Şifre"), StringLength(100)]
         public string Password { get; set; }
 
-        [Required, StringLength(100)]
+        [Required, DisplayName("Mail Adresi"), StringLength(100)]
         public string Email { get; set; }
 
 		[StringLength(50)]

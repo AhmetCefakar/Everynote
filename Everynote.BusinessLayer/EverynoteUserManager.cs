@@ -71,7 +71,7 @@ namespace Everynote.BusinessLayer
 					string activateUrl = $"localhost:49952/User/UserActivate/{layerResult.Result.ActivateGuid}";
 					MailContent mailContent = new MailContent
 					{
-						From = new MailAddress("YourMail"),
+						From = new MailAddress("andromeda2346@gmail.com"),
 						ToList = new List<MailAddress> { new MailAddress(layerResult.Result.Email.Trim()) },
 						Subject = "EveryNote Account Activation",
 						Body = $"Merhaba, {layerResult.Result.UserName}; <br/><br/> Hesabınızı aktifleştirmek için <a href='http://{activateUrl}' target = '_blank'>tıklayıyınız.</a>",
@@ -84,8 +84,8 @@ namespace Everynote.BusinessLayer
 							UseDefaultCredentials = false,
 							DeliveryMethod = SmtpDeliveryMethod.Network
 						},
-						Email = "YourMail",
-						Password = "YourPassword"
+						Email = "andromeda2346@gmail.com",
+						Password = "D1E89Ab0+%"
 					};
 
 					// Mail gönderme metodunun çağırılması ve sonucun 'MailSendResult' modeline atanması
@@ -96,8 +96,81 @@ namespace Everynote.BusinessLayer
 			return layerResult;
 		}
 
+
+		public BusinessLayerResult<User> RemoveUserById(int id)
+		{
+			BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
+			User currentUser = repoUser.Find(q => q.Id == id);
+
+			if (currentUser != null)
+			{
+				if (repoUser.Delete(currentUser) == 0)
+				{
+					businessLayerResult.AddError(ErrorMessageCode.CouldNotRemove, "Kullanıcı Silinemedi");
+					//return businessLayerResult;
+				}
+			}
+			else
+			{
+				businessLayerResult.AddError(ErrorMessageCode.UserNotFound, "Kullanıcı Bulunamadı");
+			}
+
+			return businessLayerResult;
+		}
+
 		/// <summary>
-		/// 
+		/// User bilgilerini güncelleme işlemini yapan metod
+		/// </summary>
+		/// <param name="model">User bilgilerini taşıyan model</param>
+		/// <returns></returns>
+		public BusinessLayerResult<User> UpdateProfile(User model)
+		{
+			BusinessLayerResult<User> businessLayerResult = new BusinessLayerResult<User>();
+			
+			#region Bir kullanıcı başka bir kullanıcının verilerini güncellemesin diye yapılan işlemler
+			// model de güncellenen değerlerde veritabanında kayıtlı kullanıcı bilgisi varsa bu şekilde kişinin güncelleme yapması engellenmeli,
+			// böyle bir kullanıcı varsa 'existingUser' değişkenine atılacak ve 'BusinessLayerResult<User>' türünün 'Errors' listesine gerekli açıklamlar eklenecek
+			User existUser = repoUser.Find(q => q.UserName == model.UserName || q.Email == model.Email);
+			
+			if (existUser != null && existUser.Id != model.Id)
+			{ 
+				if (existUser.UserName.ToLower() == model.UserName.ToLower())
+				{
+					businessLayerResult.AddError(ErrorMessageCode.UserNameAlreadyExist, "Kullanıcı Adı Kayıtlı, başka bir k.adı deneyiniz.");
+				}
+				if (existUser.Email == model.Email)
+				{
+					businessLayerResult.AddError(ErrorMessageCode.EmailAlreadyExist, "Email adresi Kayıtlı, başka bir email deneyiniz.");
+				}
+				return businessLayerResult;
+			}
+			#endregion
+
+			#region Kullanıcıın güncellenmesi
+			businessLayerResult.Result = repoUser.Find(q => q.Id == model.Id);
+			businessLayerResult.Result.Name = model.Name;
+			businessLayerResult.Result.Surname = model.Surname;
+			businessLayerResult.Result.Email = model.Email;
+			businessLayerResult.Result.Password = model.Password;
+
+			if (!string.IsNullOrEmpty(model.ProfileImageFileName))
+			{
+				businessLayerResult.Result.ProfileImageFileName = model.ProfileImageFileName;
+			}
+
+			//Update işleminin yapılması
+			if (repoUser.Update(businessLayerResult.Result) == 0)
+			{
+				businessLayerResult.AddError(ErrorMessageCode.CouldNotUpdate, "Profil Güncellenemedi");
+			}
+
+			#endregion
+
+			return businessLayerResult;
+		}
+
+		/// <summary>
+		/// Kullanıcı giriş işlemini sağlayan metod
 		/// </summary>
 		/// <returns></returns>
 		public BusinessLayerResult<User> LoginUser(LoginDTO loginDTO)

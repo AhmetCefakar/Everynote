@@ -1,8 +1,102 @@
-﻿
+﻿@using Everynote.Entities
+@model User
+
 @{
-    ViewBag.Title = "ProfileEdit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Profile";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ProfileEdit</h2>
+@section csses {
+	<link href="~/Content/validation-summery.css" rel="stylesheet" />
+}
 
+<div class="container">
+	<div class="row">
+		<h2>@ViewBag.Title</h2>
+		<hr />
+	</div>
+
+	<div class="raw">
+		@using (Html.BeginForm("ProfileEdit", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+		{
+			<div class="form-horizontal">
+				<div class="col-md-3">
+					<img src="~/Images/@Model.ProfileImageFileName" class="img-circle" width="128" height="128" alt="Profile Image" />
+					@Html.HiddenFor(Model => Model.ProfileImageFileName) @*'Html.HiddenFor' ile sayfanın modelindeki istenilen alan validation işlemlerinde back-end tarafına yollanan modele ekleniyor*@
+					<br /><br />
+					<input id="ProfileImage" type="file" name="ProfileImage" class="form-control" />
+					<span class="glyphicon glyphicon-info-sign">&nbsp;</span>
+					<span><i>Sadece jpg, jpeg veya png formatı yükleyiniz</i></span>
+				</div>
+
+				<div class="col-md-5">
+					@Html.ValidationSummary(false)
+					@Html.HiddenFor(Model => Model.Id) @*Bu satır ile modeldeki 'Id' alanı back-end işlenlerine giden modele eklenecek*@
+
+					<div class="form-group">
+						@Html.LabelFor(Model => Model.Name, htmlAttributes: new { @class = "control-label col-md-4" })
+						<div class="col-md-8">
+							@Html.EditorFor(Model => Model.Name, new { htmlAttributes = new { @class = "form-control" } })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(Model => Model.Surname, htmlAttributes: new { @class = "control-label col-md-4" })
+						<div class="col-md-8">
+							@Html.EditorFor(Model => Model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(Model => Model.UserName, htmlAttributes: new { @class = "control-label col-md-4" })
+						<div class="col-md-8">
+							@Html.EditorFor(Model => Model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(Model => Model.Password, htmlAttributes: new { @class = "control-label col-md-4" })
+						<div class="col-md-8">
+							@Html.EditorFor(Model => Model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(Model => Model.Email, htmlAttributes: new { @class = "control-label col-md-4" })
+						<div class="col-md-8">
+							@Html.EditorFor(Model => Model.Email, new { htmlAttributes = new { @class = "form-control" } })
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-8 col-md-offset-4">
+							<input type="submit" name="submit" value="Kaydet" class="btn btn-success col-md-5" />
+							@Html.ActionLink("İptal", "ProfileShow", "Profile", null, new { @class = "btn btn-default col-md-5 pull-right" })
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					&nbsp;
+				</div>
+
+				@*<div class="col-md-2 text-right">
+						<div class="btn-group">
+							<a href="#" class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-cog">&nbsp;</span>
+								Options
+								<span class="glyphicon-cog"></span><span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="@Url.Action("ProfileEdit")">
+										<span class="glyphicon glyphicon-edit">&nbsp;</span> Edit
+									</a>
+								</li>
+								<li>
+									<a href="@Url.Action("ProfileDelete")" onclick="return confirm('Are You Sure Remove This Account?');">
+										<span class="glyphicon glyphicon-trash">&nbsp;</span> Delete
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>*@
+			</div>
+		}
+	</div>
+</div>

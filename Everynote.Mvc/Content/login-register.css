@@ -44,15 +44,3 @@
 .remember {
 	color: black;
 }
-
-.validation-summary-errors {
-	border: 2px dotted #A94442;
-	background-color: #D76663;
-	border-radius: 8px;
-}
-
-	.validation-summary-errors ul {
-		list-style: none;
-		padding: 10px;
-		color: white;
-	}

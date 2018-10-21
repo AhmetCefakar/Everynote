@@ -7,6 +7,7 @@
 
 @section csses {
 	<link href="~/Content/login-register.css" rel="stylesheet" />
+	<link href="~/Content/validation-summery.css" rel="stylesheet" />
 }
 
 @*'https://bootsnipp.com/snippets/pjDne' sayfasındaki tasarım kullanılmıştır*@
@@ -20,13 +21,11 @@
 			<div class="main-content">
 				@using (Html.BeginForm())
 				{
-					
 					if (ViewBag.ActiveLink != null)
 					{ // Kullanıcı aktif değilse active etme link'i eklenecek
 						<a href="@ViewBag.ActiveLink" class="btn btn-primary">Hesabını Aktive Et</a>
 					}
-
-
+					
 					@Html.ValidationSummary(false) // Hata bilgilerinin ekranda liste lalinde gösterilmesini sağlayan kod
 					<div class="input-group ">
 						<span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
