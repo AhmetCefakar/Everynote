@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Everynote.Common
+namespace Everynote.Core.Authentication
 {
-	public class BaseCommon : ICommon
+	public static class App
 	{
-		public string GetCurruntUSerName()
-		{
-			return "System";
-		}
+		public static ICommon Common = new BaseCommon();
 	}
 }

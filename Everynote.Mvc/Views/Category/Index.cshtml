@@ -1,0 +1,106 @@
+﻿@using Everynote.Mvc
+@model IEnumerable<Everynote.Entities.Category>
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-12 col-md-offset-1">
+		<h2>Kategori Oluştur</h2>
+	</div>
+</div>
+<hr />
+
+<div class="row">
+	<div class="col-md-12">
+		<p>
+			@Html.ActionLink("Create New", "Create", "Category", new { @class = "btn btn-primary" })
+		</p>
+		<table class="table">
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Title)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Description)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.CreatedUserName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.CreatedOn)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.ModifiedUserName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.ModifiedOn)
+				</th>
+				<th></th>
+			</tr>
+
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Title)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Description)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.CreatedUserName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.CreatedOn)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.ModifiedUserName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.ModifiedOn)
+					</td>
+					<td>
+						@*'BootsrapHelper' altında tanımlanan helper sınıfları kullanıldı. Bu kullanım ile özel tasarlanan 
+						   html helper yapıları ile kodlar tek bir kaynaktan yönetilebilir. *@
+						@BootsrapHelper.LinkButton(url: "/Category/Edit/" + item.Id,
+												   addtionalClass: "btn-warning",
+												   title: "Edit",
+												   icon: "edit",
+												   text: string.Empty)
+
+						@BootsrapHelper.LinkButton(url: "/Category/Details/" + item.Id,
+												   addtionalClass: "btn-info",
+												   title: "Details",
+												   icon: "search",
+												   text: string.Empty)
+
+						@BootsrapHelper.LinkButton(url: "/Category/Delete/" + item.Id,
+												   addtionalClass: "btn-danger",
+												   title: "Delete",
+												   icon: "trash",
+												   text: string.Empty)
+
+
+						@*<a href="/Category/Edit/@item.Id" class="btn btn-xs btn-warning" title="Edit">
+								<span class="glyphicon glyphicon-edit"></span>
+							</a>
+							<a href="/Category/Details/@item.Id" class="btn btn-xs btn-info" title="Details">
+								<span class="glyphicon glyphicon-search"></span>
+							</a>
+							<a href="/Category/Delete/@item.Id" class="btn btn-xs btn-danger" title="Delete">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>*@
+
+						@*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+							@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+							@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+					</td>
+				</tr>
+			}
+
+		</table>
+	</div>
+</div>

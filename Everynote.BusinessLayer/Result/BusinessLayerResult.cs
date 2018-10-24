@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Everynote.BusinessLayer
+namespace Everynote.BusinessLayer.Result
 {
 	/// <summary>
 	/// Hata listesini ve generic Entity sınıfını taşımak için kullanılan sınıf

@@ -51,17 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLayerResult.cs" />
+    <Compile Include="Result\BusinessLayerResult.cs" />
     <Compile Include="CategoryManager.cs" />
     <Compile Include="EverynoteUserManager.cs" />
+    <Compile Include="Abstract\ManagerBase.cs" />
     <Compile Include="NoteManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Everynote.Common\Everynote.Common.csproj">
+    <ProjectReference Include="..\Everynote.Common\Everynote.Core.csproj">
       <Project>{b26fea5c-92a5-431b-934f-33a9dbbca924}</Project>
-      <Name>Everynote.Common</Name>
+      <Name>Everynote.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Everynote.DataAccessLayer\Everynote.DataAccessLayer.csproj">
       <Project>{b29a9a0b-50e1-487c-89e2-6a1d0d851ac5}</Project>

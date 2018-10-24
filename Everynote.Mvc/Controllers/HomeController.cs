@@ -12,14 +12,16 @@ namespace Everynote.Mvc.Controllers
 {
 	public class HomeController : Controller
 	{
+		private readonly NoteManager noteManager = new NoteManager();
+		private readonly CategoryManager categoryManager = new CategoryManager();
+
 		// GET: Home
 		public ActionResult Index()
 		{
 			// Veritabanını yoksa oluşturan metod çağırılıyor
 			//BusinessLayer.Test test = new BusinessLayer.Test();
 			//test.CommetInsertTest();
-
-			NoteManager noteManager = new NoteManager();
+			
 			return View(noteManager.GetAllNotesQueryable().OrderByDescending(q => q.CreatedOn).ToList());
 		}
 
@@ -31,9 +33,8 @@ namespace Everynote.Mvc.Controllers
 			{
 				return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
 			}
-
-			CategoryManager categoryManager = new CategoryManager();
-			Category category = categoryManager.GetCategoryById(id.Value);
+			
+			Category category = categoryManager.Find(q => q.Id == id.Value);
 
 			if (category == null)
 			{
@@ -46,8 +47,6 @@ namespace Everynote.Mvc.Controllers
 		// GET: En çok beğenilenler notların listesini döndüren action
 		public ActionResult MostLiked()
 		{
-			NoteManager noteManager = new NoteManager();
-
 			return View("Index", noteManager.GetAllNotes().OrderByDescending(q => q.LikeCount).ToList());
 		}
 

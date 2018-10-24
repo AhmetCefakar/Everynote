@@ -1,4 +1,4 @@
-﻿using Everynote.Common;
+﻿using Everynote.Core.Authentication;
 using Everynote.Mvc.Init;
 using System;
 using System.Collections.Generic;
@@ -20,5 +20,6 @@ namespace Everynote.Mvc
 			App.Common = new WebCommon();
 
         }
+		
     }
 }

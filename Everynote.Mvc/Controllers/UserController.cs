@@ -1,10 +1,12 @@
 ﻿using Everynote.BusinessLayer;
+using Everynote.BusinessLayer.Result;
 using Everynote.Entities;
 using Everynote.Entities.DTO;
 using Everynote.Entities.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,20 +14,21 @@ namespace Everynote.Mvc.Controllers
 {
 	public class UserController : Controller
 	{
+		private readonly EverynoteUserManager userManager = new EverynoteUserManager();
+
 		#region Login
 		// GET: Login, Login sayfası çağırıldığında çalışan action
 		public ActionResult Login()
 		{
 			return View();
 		}
-
+	
 		// POST: Login, Login sayfası post olduğunda çalışan action
 		[HttpPost]
 		public ActionResult Login(LoginDTO model)
 		{
 			if (ModelState.IsValid)
 			{
-				EverynoteUserManager userManager = new EverynoteUserManager();
 				BusinessLayerResult<User> loginResult = userManager.LoginUser(model);
 
 				if (loginResult.Errors.Count > 0)
@@ -69,8 +72,7 @@ namespace Everynote.Mvc.Controllers
 			// Modelin annotation kurallarana uygunğu kontrol ediliyor
 			if (ModelState.IsValid)
 			{
-				EverynoteUserManager everynoteUserManager = new EverynoteUserManager();
-				BusinessLayerResult<User> registerResult = everynoteUserManager.RegisterUser(model);
+				BusinessLayerResult<User> registerResult = userManager.RegisterUser(model);
 
 				if (registerResult.Errors.Count > 0)
 				{
@@ -98,8 +100,7 @@ namespace Everynote.Mvc.Controllers
 		public ActionResult UserActivate(Guid id)
 		{
 			// Todo: Kullanıcı aktivasyonu sağlanacak 
-			EverynoteUserManager everynoteUserManager = new EverynoteUserManager();
-			BusinessLayerResult<User> resultUser = everynoteUserManager.ActivateUser(id);
+			BusinessLayerResult<User> resultUser = userManager.ActivateUser(id);
 
 			if (resultUser.Errors.Count > 0)
 			{
@@ -123,6 +124,123 @@ namespace Everynote.Mvc.Controllers
 
 			return View("Success", successViewModel); // Shared altındaki 'Success' view'ına gider
 		}
+		#endregion
+
+		#region Admin İşlemleri
+		// GET: Users
+		public ActionResult Index()
+		{
+			return View(userManager.List());
+		}
+
+		// GET: Users/Details/5
+		public ActionResult Details(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			User user = userManager.Find(q => q.Id == id.Value);
+			if (user == null)
+			{
+				return HttpNotFound();
+			}
+			return View(user);
+		}
+
+		// GET: Users/Create
+		public ActionResult Create()
+		{
+			return View();
+		}
+
+		// POST: Users/Create
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Create(User user)
+		{
+			ModelState.Remove("CreatedUserName");
+			ModelState.Remove("CreatedOn");
+			if (ModelState.IsValid)
+			{
+				BusinessLayerResult<User> businessLayerResult = userManager.Insert(user);
+				if (businessLayerResult.Errors.Count > 0)
+				{
+					businessLayerResult.Errors.ForEach(q => ModelState.AddModelError("", q.Message));
+					return View(user); // Aynı sayfaya hata bilgileri ile modelin geri yollanması
+				}
+
+				return RedirectToAction("Index");
+			}
+
+			return View(user);
+		}
+
+		// GET: Users/Edit/5
+		public ActionResult Edit(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			User user = userManager.Find(q => q.Id == id.Value);
+			if (user == null)
+			{
+				return HttpNotFound();
+			}
+			return View(user);
+		}
+
+		// POST: Users/Edit/5
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit([Bind(Include = "Id,Name,Surname,Gender,UserName,Password,Email,ProfileImageFileName,IsActive,IsAdmin")] User user)
+		{
+			if (ModelState.IsValid)
+			{
+				// Todo: Varolan kullanıcı bilgileri ile kullanıcı düzenlenemeyecek şekilde yazılacak!
+				BusinessLayerResult<User> businessLayerResult = userManager.Update(user);
+				if (businessLayerResult.Errors.Count > 0)
+				{
+					businessLayerResult.Errors.ForEach(q => ModelState.AddModelError("", q.Message));
+					return View(user); // Aynı sayfaya hata bilgileri ile modelin geri yollanması
+				}
+			
+				return RedirectToAction("Index");
+			}
+			return View(user); // Aynı sayfaya güncelleme işlemi sonrası modelin geri yollanması
+		}
+
+		// GET: Users/Delete/5
+		public ActionResult Delete(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			User user = userManager.Find(q => q.Id == id.Value);
+			if (user == null)
+			{
+				return HttpNotFound();
+			}
+			return View(user);
+		}
+
+		// POST: Users/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public ActionResult DeleteConfirmed(int id)
+		{
+			// Todo: Silme işleminde kayıt silinmeden pasife çekilecek şekilde ayarlanmalıdır
+			User user = userManager.Find(q => q.Id == id);
+			userManager.Delete(user);
+			return RedirectToAction("Index");
+		}
+		
 		#endregion
 	}
 }

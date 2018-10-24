@@ -1,4 +1,4 @@
-﻿using Everynote.Common;
+﻿using Everynote.Core.Authentication;
 using Everynote.Entities;
 using System;
 using System.Collections.Generic;

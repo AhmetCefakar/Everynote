@@ -1,0 +1,1 @@
+﻿Bu klasör altındaki tanımlar DAL(Data Access Layer) katmanındaki bazı tanımlara diğer katmanlardan ulaşılması gerektiği için eklendi.

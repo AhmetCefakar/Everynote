@@ -12,7 +12,8 @@ namespace Everynote.Entities.Enums
 		ActivateIdDoesNotExist = 155,
 		UserNotFound = 156,
 		CouldNotUpdate = 157,
-		CouldNotRemove = 158
+		CouldNotRemove = 158,
+		CouldNotInsert = 159
 	}
 
 	public enum Gender

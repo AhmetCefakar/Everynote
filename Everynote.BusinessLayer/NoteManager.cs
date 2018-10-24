@@ -5,21 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Everynote.Entities;
 using Everynote.DataAccessLayer.EntityFramework;
+using Everynote.BusinessLayer.Abstract;
 
 namespace Everynote.BusinessLayer
 {
-    public class NoteManager
+    public class NoteManager : ManagerBase<Note>
     {
-        private Repository<Note> repoNote = new Repository<Note>();
-
         public List<Note> GetAllNotes()
         {
-            return repoNote.List();
+            return List();
         }
 
         public IQueryable<Note> GetAllNotesQueryable()
         {
-            return repoNote.ListQueryable();
+            return ListQueryable();
         }
     }
 }

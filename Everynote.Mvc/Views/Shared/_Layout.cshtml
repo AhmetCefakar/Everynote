@@ -2,7 +2,7 @@
 
 @{
 	// Kullanıcı bilgilerinin session'a atılması işlemi
-	
+
 	User user = null;
 
 	if (Session["login"] != null)
@@ -47,9 +47,56 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					@if (user != null && user.IsAdmin)
+					@if (user != null)
 					{
-						<li><a href="#"><span class="glyphicon glyphicon-wrench"></span> Yönet</a></li>
+						<li class="dropdown">
+							<a href="/Note/MyNotes" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-wrench"></span> Yönet <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="/Note/AddNew">
+										<span class="glyphicon glyphicon-plus"> Not Ekle</span>
+									</a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a href="/Note/MyNotes">
+										<span class="glyphicon glyphicon-th-list"> Notlarım</span>
+									</a>
+								</li>
+								<li>
+									<a href="/Note/MyLikedNotes">
+										<span class="glyphicon glyphicon-heart"> Beğendiğim Notlar</span>
+									</a>
+								</li>
+								@if (user.IsAdmin)
+								{
+									<li role="separator" class="divider"></li>
+									<li>
+										<a href="/Category/Create">
+											<span class="glyphicon glyphicon-plus"> Kategori ekle</span>
+										</a>
+									</li>
+									<li>
+										<a href="/Category/Index">
+											<span class="glyphicon glyphicon-th-list"> Kategori Listele</span>
+										</a>
+									</li>
+									<li role="separator" class="divider"></li>
+									<li>
+										<a href="/User/Create">
+											<span class="glyphicon glyphicon-plus"> Kullanıcı ekle</span>
+										</a>
+									</li>
+									<li>
+										<a href="/User/Index">
+											<span class="glyphicon glyphicon-th-list"> Kullanıcılar</span>
+										</a>
+									</li>
+								}
+							</ul>
+						</li>
 					}
 					<li><a href="/Home/MostLiked"><span class="glyphicon glyphicon-star-empty"></span> En Beğenilenler</a></li>
 					<li><a href="/Home/Index"><span class="glyphicon glyphicon-th-list"></span> Son Yazılar</a></li>

@@ -1,0 +1,20 @@
+﻿@*Bu dosya MVC projesinde kullanılan özel helper metodlarını içeriyor*@
+
+@helper LinkButton(string id = "", string url = "", string addtionalClass = "", string title = "", string icon = "", string text = "")
+{
+	<a href="@url" class="btn btn-xs @addtionalClass" title="@title">
+		<span class="glyphicon glyphicon-@icon"></span> @text
+	</a>
+
+	<a id="@id" name="@id" href="@url" class="btn btn-xs @addtionalClass" title="@title">
+		<span class="glyphicon glyphicon-@icon"></span> @text
+	</a>
+}
+
+@helper LinkButton(string url = "", string addtionalClass = "", string title = "", string icon = "", string text = "")
+{
+	<a href="@url" class="btn btn-xs @addtionalClass" title="@title">
+		<span class="glyphicon glyphicon-@icon"></span> @text
+	</a>
+}
+

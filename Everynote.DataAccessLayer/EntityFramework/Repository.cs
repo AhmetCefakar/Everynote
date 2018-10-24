@@ -1,6 +1,6 @@
-﻿using Everynote.Common;
+﻿using Everynote.Core.Abstract;
+using Everynote.Core.Authentication;
 using Everynote.DataAccessLayer;
-using Everynote.DataAccessLayer.Abstract;
 using Everynote.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,11 +14,10 @@ namespace Everynote.DataAccessLayer.EntityFramework
 {
     // Generic(Genel) mimari kullanılarak oluşturulan Repository sınıfı
     public class Repository<T> : RepositoryBase, IRepository<T> where T : class
-    {
+	{
         //private readonly DatabaseContext _db;
         private DbSet<T> _objectSet;
-            
-        // Todo: Repository altında -> Repositoy Constructor
+        
         public Repository()
         {
             //_db = RepositoryBase.CreateContext(); // Singleton ile db context üretmeyi sağlar

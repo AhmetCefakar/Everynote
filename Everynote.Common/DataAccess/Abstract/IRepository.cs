@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Everynote.DataAccessLayer.Abstract
+namespace Everynote.Core.Abstract
 {
     /// <summary>
     /// Bu Interface bir den fazla 

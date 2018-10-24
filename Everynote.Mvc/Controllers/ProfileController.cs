@@ -1,4 +1,5 @@
 ﻿using Everynote.BusinessLayer;
+using Everynote.BusinessLayer.Result;
 using Everynote.Entities;
 using Everynote.Entities.Messages;
 using System;

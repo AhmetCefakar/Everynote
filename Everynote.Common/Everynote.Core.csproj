@@ -7,8 +7,8 @@
     <ProjectGuid>{B26FEA5C-92A5-431B-934F-33A9DBBCA924}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Everynote.Common</RootNamespace>
-    <AssemblyName>Everynote.Common</AssemblyName>
+    <RootNamespace>Everynote.Core</RootNamespace>
+    <AssemblyName>Everynote.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,13 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App.cs" />
-    <Compile Include="BaseCommon.cs" />
-    <Compile Include="ICommon.cs" />
+    <Compile Include="Authentication\App.cs" />
+    <Compile Include="Authentication\BaseCommon.cs" />
+    <Compile Include="Authentication\ICommon.cs" />
+    <Compile Include="DataAccess\Abstract\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helper\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Authentication\ReadMe.txt" />
+    <Content Include="DataAccess\ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

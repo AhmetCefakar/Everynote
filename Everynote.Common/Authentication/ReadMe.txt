@@ -1,0 +1,1 @@
+﻿Bu klasör altındaki yapılar kullanıcı bilgisine bütün katmanlardan erişim sağlıyabilmek için kullanılıyor

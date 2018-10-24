@@ -30,12 +30,13 @@ namespace Everynote.Entities
 
 		[StringLength(50)]
 		public string ProfileImageFileName { get; set; }
-
+		
 		public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
 
         [Required]
-        public Guid ActivateGuid { get; set; }
+		[ScaffoldColumn(false)] // 'ScaffoldColumn' kullanımı ile bu model UI tarafından otomatik üretim işlemlerinde kullanılırsa göz ardı edilme durumunu ayarlıyor.
+		public Guid ActivateGuid { get; set; }
 
 
         // Bir kategorinin birden çok notu vardır
