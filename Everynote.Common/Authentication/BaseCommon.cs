@@ -8,7 +8,7 @@ namespace Everynote.Core.Authentication
 {
 	public class BaseCommon : ICommon
 	{
-		public string GetCurruntUSerName()
+		public string GetCurrentUSerName()
 		{
 			return "System";
 		}

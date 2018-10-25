@@ -17,7 +17,7 @@ namespace Everynote.Entities
             Notes = new List<Note>();
         }
 
-        [DisplayName("Başlık"), Required, StringLength(50)]
+        [DisplayName("Kategori"), Required, StringLength(50)]
         public string Title { get; set; }
 
         [DisplayName("Açıklama"), StringLength(150)]

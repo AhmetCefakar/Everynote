@@ -15,15 +15,17 @@ namespace Everynote.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        // Her tabloda kaydede-kayıt tarihi ve değiştiren-değiştirme tarihi alanları olur
-        [Required]
+        // Her tabloda kaydeden-kayıt tarihi ve değiştiren-değiştirme tarihi alanları olur
+        [Required, ScaffoldColumn(false)]
         public string CreatedUserName { get; set; }
 
-        [Required]
+        [Required, ScaffoldColumn(false)]
         public DateTime CreatedOn { get; set; }
-        
-        public string ModifiedUserName { get; set; }
-        
+
+		[ScaffoldColumn(false)] // 'ScaffoldColumn' ile otomatik UI kısmına model oluşturulurken ilgili property'nin kullanılıp kullanılmaması ayarlanıyor
+		public string ModifiedUserName { get; set; }
+
+		[ScaffoldColumn(false)]
         public DateTime? ModifiedOn { get; set; }
     }
 }

@@ -12,6 +12,6 @@ namespace Everynote.Core.Authentication
 		/// Geriye kullanıcı adını dönen metod
 		/// </summary>
 		/// <returns></returns>
-		string GetCurruntUSerName();
+		string GetCurrentUSerName();
 	}
 }

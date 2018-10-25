@@ -1,9 +1,8 @@
-﻿@using Everynote.BusinessLayer
-@using Everynote.Entities
+﻿@using Everynote.Entities
+@using Everynote.Mvc.Models; 
 
 @{
-    CategoryManager categoryManager = new CategoryManager();
-    List<Category> categories = categoryManager.List();
+    List<Category> categories = CacheHelper.GetCategoriesFromCache();
 }
 
 <p class="lead">Kategoriler</p>

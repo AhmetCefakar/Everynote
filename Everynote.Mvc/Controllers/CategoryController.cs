@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Everynote.BusinessLayer;
 using Everynote.Entities;
+using Everynote.Mvc.Models;
 
 namespace Everynote.Mvc.Controllers
 {
@@ -55,6 +56,7 @@ namespace Everynote.Mvc.Controllers
 			if (ModelState.IsValid)
 			{
 				categoryManager.Insert(category);
+				CacheHelper.RemoveCategoryCache();
 				
 				return RedirectToAction("Index");
 			}
@@ -95,6 +97,8 @@ namespace Everynote.Mvc.Controllers
 				categoryEdited.Description = category.Description;
 
 				categoryManager.Update(categoryEdited);
+				CacheHelper.RemoveCategoryCache();
+
 				return RedirectToAction("Index");
 			}
 			return View(category);
@@ -121,6 +125,8 @@ namespace Everynote.Mvc.Controllers
 		public ActionResult DeleteConfirmed(int id)
 		{
 			Category category = categoryManager.Find(q => q.Id == id);
+			CacheHelper.RemoveCategoryCache();
+
 			return RedirectToAction("Index");
 		}
 

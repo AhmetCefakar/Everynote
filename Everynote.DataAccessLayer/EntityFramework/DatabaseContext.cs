@@ -12,6 +12,7 @@ namespace Everynote.DataAccessLayer.EntityFramework
 	public class DatabaseContext : DbContext
 	{
 		public DatabaseContext()
+			:base("name=DatabaseContext")
 		{
 			Database.SetInitializer(new DatabaseInitializer());
 		}
@@ -22,7 +23,40 @@ namespace Everynote.DataAccessLayer.EntityFramework
 		public DbSet<Comment> Comment { get; set; }
 		public DbSet<Category> Category { get; set; }
 		public DbSet<Liked> Liked { get; set; }
-		
+
+		// Tablolar arası ilişkiler 'Fluent API' ile tanımlanıyor
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		{
+			//modelBuilder.Entity<Category>()
+			//	.HasMany(e => e.Notes)
+			//	.WithOptional(e => e.Category)
+			//	.HasForeignKey(e => e.CategoryId);
+
+			//modelBuilder.Entity<Note>()
+			//	.HasMany(e => e.Comments)
+			//	.WithOptional(e => e.Note)
+			//	.HasForeignKey(e => e.NoteId);
+
+			//modelBuilder.Entity<Note>()
+			//	.HasMany(e => e.Likes)
+			//	.WithRequired(e => e.Note)
+			//	.HasForeignKey(e => e.NoteId);
+
+			//modelBuilder.Entity<User>()
+			//	.HasMany(e => e.Comments)
+			//	.WithOptional(e => e.Owner)
+			//	.HasForeignKey(e => e.OwnerId);
+
+			//modelBuilder.Entity<User>()
+			//	.HasMany(e => e.Likes)
+			//	.WithRequired(e => e.LikedUser)
+			//	.HasForeignKey(e => e.LikedUserId);
+
+			//modelBuilder.Entity<User>()
+			//	.HasMany(e => e.Notes)
+			//	.WithOptional(e => e.Owner)
+			//	.HasForeignKey(e => e.OwnerId);
+		}
 	}
 
 	/// <summary>

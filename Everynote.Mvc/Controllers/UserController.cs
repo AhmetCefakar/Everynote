@@ -3,6 +3,7 @@ using Everynote.BusinessLayer.Result;
 using Everynote.Entities;
 using Everynote.Entities.DTO;
 using Everynote.Entities.Messages;
+using Everynote.Mvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,8 +43,9 @@ namespace Everynote.Mvc.Controllers
 					loginResult.Errors.ForEach(q => ModelState.AddModelError("", q.Message)); // BLL'den gelen hatalar ModelState'e ekleniyor 
 					return View(model);
 				}
-
-				Session["login"] = loginResult.Result;
+				
+				// Login başarılı olduğu için session ataması yapılıyor
+				CurrentSession.Set<User>("login", loginResult.Result);
 				return RedirectToAction("Index", "Home");
 			}
 

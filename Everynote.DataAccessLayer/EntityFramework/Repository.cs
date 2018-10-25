@@ -65,7 +65,7 @@ namespace Everynote.DataAccessLayer.EntityFramework
 			{
 				EverynoteEntityBase baseEntity = obj as EverynoteEntityBase;
 				baseEntity.CreatedOn = DateTime.Now;
-				baseEntity.CreatedUserName = App.Common.GetCurruntUSerName();
+				baseEntity.CreatedUserName = App.Common.GetCurrentUSerName();
 			}
 
             return Save();
@@ -77,7 +77,7 @@ namespace Everynote.DataAccessLayer.EntityFramework
 			{
 				EverynoteEntityBase baseEntity = obj as EverynoteEntityBase;
 				baseEntity.ModifiedOn = DateTime.Now;
-				baseEntity.ModifiedUserName = App.Common.GetCurruntUSerName();
+				baseEntity.ModifiedUserName = App.Common.GetCurrentUSerName();
 			}
 
 			return Save();

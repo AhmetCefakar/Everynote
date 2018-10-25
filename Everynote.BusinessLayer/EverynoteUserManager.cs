@@ -71,7 +71,7 @@ namespace Everynote.BusinessLayer
 					string activateUrl = $"localhost:49952/User/UserActivate/{layerResult.Result.ActivateGuid}";
 					MailContent mailContent = new MailContent
 					{
-						From = new MailAddress("YourMail"),
+						From = new MailAddress("YourMailAddress"),
 						ToList = new List<MailAddress> { new MailAddress(layerResult.Result.Email.Trim()) },
 						Subject = "EveryNote Account Activation",
 						Body = $"Merhaba, {layerResult.Result.UserName}; <br/><br/> Hesabınızı aktifleştirmek için <a href='http://{activateUrl}' target = '_blank'>tıklayıyınız.</a>",
@@ -84,8 +84,8 @@ namespace Everynote.BusinessLayer
 							UseDefaultCredentials = false,
 							DeliveryMethod = SmtpDeliveryMethod.Network
 						},
-						Email = "YourMail",
-						Password = "YourEmail"
+						Email = "YourMailAddress",
+						Password = "YourMailPassword"
 					};
 
 					// Mail gönderme metodunun çağırılması ve sonucun 'MailSendResult' modeline atanması

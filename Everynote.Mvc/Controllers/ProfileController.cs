@@ -2,6 +2,7 @@
 using Everynote.BusinessLayer.Result;
 using Everynote.Entities;
 using Everynote.Entities.Messages;
+using Everynote.Mvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,8 @@ namespace Everynote.Mvc.Controllers
 		/// <returns></returns>
 		public ActionResult ProfileShow()
 		{
-			User Currentuser = Session["login"] as User;
-
 			EverynoteUserManager everynoteUserManager = new EverynoteUserManager();
-			BusinessLayerResult<User> businessLayerResultUser = everynoteUserManager.GetUserById(Currentuser.Id);
+			BusinessLayerResult<User> businessLayerResultUser = everynoteUserManager.GetUserById(CurrentSession.User.Id);
 
 			if (businessLayerResultUser.Errors.Count > 0)
 			{
@@ -40,10 +39,8 @@ namespace Everynote.Mvc.Controllers
 		// Edit sayfasını açan action
 		public ActionResult ProfileEdit()
 		{
-			User Currentuser = Session["login"] as User;
-
 			EverynoteUserManager everynoteUserManager = new EverynoteUserManager();
-			BusinessLayerResult<User> businessLayerResultUser = everynoteUserManager.GetUserById(Currentuser.Id);
+			BusinessLayerResult<User> businessLayerResultUser = everynoteUserManager.GetUserById(CurrentSession.User.Id);
 
 			if (businessLayerResultUser.Errors.Count > 0)
 			{
@@ -68,8 +65,6 @@ namespace Everynote.Mvc.Controllers
 
 			if (ModelState.IsValid)
 			{
-				User Currentuser = Session["login"] as User;
-
 				#region Kullanıcı Resminin Değiştirilmesi
 				if (ProfileImage != null && (
 					ProfileImage.ContentType == "image/jpg" ||
@@ -98,7 +93,8 @@ namespace Everynote.Mvc.Controllers
 					return View("Error", errorViewModel); // Shared altındaki 'Error' view'ına gider
 				}
 
-				Session["login"] = businessLayerResultUser.Result;
+				// Profil değiştirildiği için session güncelleniyor.
+				CurrentSession.Set<User>("login", businessLayerResultUser.Result);
 
 				return RedirectToAction("ProfileEdit", "Profile");
 			}
@@ -109,10 +105,8 @@ namespace Everynote.Mvc.Controllers
 		// Delete işlemi yapan action
 		public ActionResult ProfileDelete()
 		{
-			User Currentuser = Session["login"] as User;
-
 			EverynoteUserManager everynoteUserManager = new EverynoteUserManager();
-			BusinessLayerResult<User> businessLayerResultUser = everynoteUserManager.RemoveUserById(Currentuser.Id);
+			BusinessLayerResult<User> businessLayerResultUser = everynoteUserManager.RemoveUserById(CurrentSession.User.Id);
 
 			if (businessLayerResultUser.Errors.Count > 0)
 			{

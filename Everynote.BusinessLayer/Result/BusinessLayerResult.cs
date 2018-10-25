@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace Everynote.BusinessLayer.Result
 {
 	/// <summary>
-	/// Hata listesini ve generic Entity sınıfını taşımak için kullanılan sınıf
+	/// Hata listesini ve generic Entity sınıfını taşımak için kullanılan sınıf(istenirse bu sınıf genişletilebilir)
 	/// </summary>
-	/// <typeparam name="T">Hata </typeparam>
+	/// <typeparam name="T">İşlem yapılan Modeli tutan generic parametre</typeparam>
 	public class BusinessLayerResult<T> where T : class, new()
 	{
 		public BusinessLayerResult()
