@@ -2,10 +2,6 @@
 
 @helper LinkButton(string id = "", string url = "", string addtionalClass = "", string title = "", string icon = "", string text = "")
 {
-	<a href="@url" class="btn btn-xs @addtionalClass" title="@title">
-		<span class="glyphicon glyphicon-@icon"></span> @text
-	</a>
-
 	<a id="@id" name="@id" href="@url" class="btn btn-xs @addtionalClass" title="@title">
 		<span class="glyphicon glyphicon-@icon"></span> @text
 	</a>
@@ -18,3 +14,28 @@
 	</a>
 }
 
+@*Popup oluşturmak için kullanılan helper metodu*@
+@helper ModalPopup(string id = "myModal", string title = "Modal Title", bool showCloseButton = true)
+{
+	<!-- Modal -->
+	<div class="modal fade" id="@id" name="@id" tabindex="-1" role="dialog" aria-labelledby="@(id + "-label")">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div id="@(id + "-header")" class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="@(id + "-label")">@title</h4>
+				</div>
+				<div id="@(id + "-body")" class="modal-body">
+					@*Bu alandaki içerik ilgili modal açıldığı zaman tetiklenecek ve js kodu ile ajax çağrısı yapılıp gelen data dıldurulacak*@
+				</div>
+				<div id="@(id + "-footer")" class="modal-footer">
+					@if (showCloseButton)
+					{
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					}
+					@*<button type="button" class="btn btn-primary">Save changes</button>*@
+				</div>
+			</div>
+		</div>
+	</div>
+}

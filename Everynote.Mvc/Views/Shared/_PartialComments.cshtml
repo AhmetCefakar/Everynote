@@ -1,0 +1,59 @@
+﻿@using Everynote.Entities
+@using Everynote.Mvc.Models
+
+@model List<Comment>
+
+@foreach (Comment item in Model)
+{
+	<div class="media">
+		<div class="media-left media-top">
+			<div class="media-object">
+				<span class="glyphicon glyphicon-comment"></span>
+			</div>
+		</div>
+		<div class="media-body">
+			<div>
+				<span class="col-md-10" id="comment-text-@item.Id" contenteditable="false">
+					@item.Text
+				</span>
+				@if (CurrentSession.User != null && CurrentSession.User.UserName == item.CreatedUserName)
+				{
+					<span class="col-md-2 pull-right">
+						<button type="button" class="btn btn-warning btn-xs" data-edit-mode="false" onclick="CommentEdit(this, @item.Id);">
+							<span class="glyphicon glyphicon-edit"></span>
+						</button>
+						<button type="button" class="btn btn-danger btn-xs" onclick="CommentDelete(@item.Id);">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</span>
+				}
+				<small class="col-md-12 text-right">
+					<span class="glyphicon glyphicon-time"></span> @item.ModifiedOn &nbsp;&nbsp;&nbsp;
+					<span class="glyphicon glyphicon-user"></span> @item.CreatedUserName
+				</small>
+			</div>
+		</div>
+	</div>
+}
+
+@if (CurrentSession.User != null)
+{
+	<div class="row">
+		<div class="col-md-12">
+			<hr />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="input-group">
+				<input id="new-comment" type="text" class="form-control" style="max-width:none;" placeholder="Yorumum">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" onclick="CommentInsert(document.getElementById('new-comment').value)">
+						<span class="glyphicon glyphicon-send"></span>
+						Gönder
+					</button>
+				</span>
+			</div><!-- /input-group -->
+		</div>
+	</div>
+}

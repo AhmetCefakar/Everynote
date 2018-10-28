@@ -3,104 +3,230 @@
 @model List<Note>
 
 @{
-    ViewBag.Title = "Index";
+	ViewBag.Title = "Index";
 }
 
 <!-- Page Content -->
 <div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            @*Kategoriler listesinin veritabanından çekilerek oluşturulmasını sağlayan partialView*@
-            @Html.Partial("_PartialCategories")
-        </div>
+	<div class="row">
+		<div class="col-md-3">
+			@*Kategoriler listesinin veritabanından çekilerek oluşturulmasını sağlayan partialView*@
+			@Html.Partial("_PartialCategories")
+		</div>
 
-        <div class="col-md-9">
-            <div class="row carousel-holder">
-                <div class="col-md-12">
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                            </div>
-                            <div class="item">
-                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                            </div>
-                            <div class="item">
-                                <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                            </div>
-                        </div>
-                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left"></span>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                @foreach (var NoteItem in Model)
-                {
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h6 class="text-right">
-                                    @NoteItem.CreatedOn.ToString("dd.MM.yyyy HH:mm") <span class="glyphicon glyphicon-time"></span><br />
-                                    @NoteItem.CreatedUserName <span class="glyphicon glyphicon-user"></span>
-                                </h6>
-                                <h4>
-                                    <a href="#">@NoteItem.Title</a>
-                                </h4>
-                                <hr style="margin:2px 0;" />
+		<div class="col-md-9">
+			<div class="row carousel-holder">
+				<div class="col-md-12">
+					<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+							<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+							<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+						</ol>
+						<div class="carousel-inner">
+							<div class="item active">
+								<img class="slide-image" src="http://placehold.it/800x300" alt="">
+							</div>
+							<div class="item">
+								<img class="slide-image" src="http://placehold.it/800x300" alt="">
+							</div>
+							<div class="item">
+								<img class="slide-image" src="http://placehold.it/800x300" alt="">
+							</div>
+						</div>
+						<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+							<span class="glyphicon glyphicon-chevron-left"></span>
+						</a>
+						<a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+							<span class="glyphicon glyphicon-chevron-right"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				@foreach (var NoteItem in Model)
+				{
+					<div class="col-sm-4 col-lg-4 col-md-4">
+						<div class="thumbnail">
+							<img src="http://placehold.it/320x150" alt="">
+							<div class="caption">
+								<h6 class="text-right">
+									@NoteItem.CreatedOn.ToString("dd.MM.yyyy HH:mm") <span class="glyphicon glyphicon-time"></span><br />
+									@NoteItem.CreatedUserName <span class="glyphicon glyphicon-user"></span>
+								</h6>
+								<h4>
+									<a href="#">@NoteItem.Title</a>
+								</h4>
+								<hr style="margin:2px 0;" />
 
-                                @if (!string.IsNullOrEmpty(NoteItem.Text) && NoteItem.Text.Length >= 90)
-                                {
-                                    <p>@(NoteItem.Text.Substring(0, 90) + "...")</p>
-                                    <p class="pull-right">
-                                        <a href="" class="btn btn-default btn-sm">Devamı <span class="glyphicon glyphicon-chevron-right"></span></a>
-                                    </p>
-                                }
-                                else
-                                {
-                                    <p>@NoteItem.Text</p>
+								@if (!string.IsNullOrEmpty(NoteItem.Text) && NoteItem.Text.Length >= 90)
+								{
+									<p>@(NoteItem.Text.Substring(0, 90) + "...")</p>
+									<p class="pull-right">
+										<a href="" class="btn btn-default btn-sm">Devamı <span class="glyphicon glyphicon-chevron-right"></span></a>
+									</p>
+								}
+								else
+								{
+									<p>@NoteItem.Text</p>
 
-                                }
+								}
 
-                            </div>
-                            <hr style="margin:10px 0;" />
-                            <div class="ratings">
-                                <p class="pull-right">
-                                    <button class="btn btn-default">
-                                        <span class="glyphicon glyphicon-comment"></span>&emsp;Yorumlar
-                                    </button>
-                                </p>
-                                <p>
-                                    <button class="btn btn-default">
-                                        <span class="glyphicon glyphicon-star-empty"></span> @NoteItem.LikeCount
-                                    </button>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                }
+							</div>
+							<hr style="margin:10px 0;" />
+							<div class="ratings">
+								<p class="pull-right">
+									<button class="btn btn-default" data-toggle="modal" data-target="#modal-yorumlar" data-note-id="@NoteItem.Id">
+										<span class="glyphicon glyphicon-comment"></span>&emsp;Yorumlar
+									</button>
+								</p>
+								<p>
+									<button class="btn btn-default">
+										<span class="glyphicon glyphicon-star-empty"></span> @NoteItem.LikeCount
+									</button>
+								</p>
+							</div>
+						</div>
+					</div>
+				}
 
-
-
-
-                @*<div class="col-sm-4 col-lg-4 col-md-4">
-                        <h4>
-                            <a href="#">Like this template?</a>
-                        </h4>
-                        <p>If you like this template, then check out <a target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this tutorial</a> on how to build a working review system for your online store!</p>
-                        <a class="btn btn-primary" target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">View Tutorial</a>
-                    </div>*@
-            </div>
-        </div>
-    </div>
+				@*<div class="col-sm-4 col-lg-4 col-md-4">
+						<h4>
+							<a href="#">Like this template?</a>
+						</h4>
+						<p>If you like this template, then check out <a target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this tutorial</a> on how to build a working review system for your online store!</p>
+						<a class="btn btn-primary" target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">View Tutorial</a>
+					</div>*@
+			</div>
+		</div>
+	</div>
 </div>
+
+@BootsrapHelper.ModalPopup(id: "modal-yorumlar", title: "Yorumlar") @*Yorumların gösterileceği modal'ın ekrana eklenmesini sağlayan helper çağırılıyor*@
+
+
+@section scripts{
+	<script type="text/javascript">
+		let modalYorumlarBodyId = '#modal-yorumlar-body';
+		let noteId = 0;
+
+		// Helper ile ekrana basılan modal'ın açılması tetiklendiğinde tetiklenen JS kodu
+		$('#modal-yorumlar').on('show.bs.modal', function (e) {
+			//alert('Modal show event yakalandı! |:--->');
+			let btn = $(e.relatedTarget);
+			noteId = btn.data('note-id');
+
+			$(modalYorumlarBodyId).load('/Comment/ShowNoteComments/' + noteId);
+		})
+
+		// 'BootsrapHelper.ModalPopup' ile sayfaya basılan modal'deki her bir yorumun güncelleme butonuna basılınca tetiklenen fonksiyon
+		function CommentEdit(commentButtonProtorip, commetId) {
+			let thisButton = $(commentButtonProtorip); // gelen JS button propotip'i JQuery propotip'ine çevriliyor
+			//let actionMode = thisButton.data('edit-mode');
+
+			// Bu buton çift yönlü çalışacak ilk tıklamada 'comment-text' değeri güncellenebilir hale getirilecek,
+			// ikinci tıklamada işle tersine cevrilecek.
+			if (!thisButton.data('edit-mode')) {
+				thisButton.data('edit-mode', true);
+
+				thisButton.removeClass('btn-warning');
+				thisButton.addClass('btn-success');
+
+				let thisSpan = thisButton.find('span');
+				thisSpan.removeClass('glyphicon-edit');
+				thisSpan.addClass('glyphicon-ok');
+
+				$('#comment-text-' + commetId).attr('contenteditable', true);
+				$('#comment-text-' + commetId).focus();
+			}
+			else {
+				thisButton.data('edit-mode', false);
+
+				thisButton.removeClass('btn-success');
+				thisButton.addClass('btn-warning');
+
+				let thisSpan = thisButton.find('span');
+				thisSpan.removeClass('glyphicon-ok');
+				thisSpan.addClass('glyphicon-edit');
+
+				$('#comment-text-' + commetId).attr('contenteditable', false);
+
+				// back-end tarafına edit için çağrıda bulunulması
+				let metin = document.getElementById('comment-text-' + commetId).innerHTML.trim(); //$('comment-text-' + commetId).text();
+				$.ajax({
+					type: 'POST',
+					url: '/Comment/Edit/' + commetId,
+					//dataType: 'application/json', // JSON.stringify();
+					data: { text: metin },
+					success: function (data) {
+						if (data.result) {
+							// Modal-body kısmına yorumlar tekrardan yükleniyor
+							$(modalYorumlarBodyId).load('/Comment/ShowNoteComments/' + noteId);
+						}
+						else {
+							alert('Yorum Güncellenemedi!');
+						}
+					},
+					error: function () {
+						alert('Sunucuya Erişilemedi!');
+					}
+				});
+			}
+
+		}
+
+		// 'BootsrapHelper.ModalPopup' ile sayfaya basılan modal'deki her bir yorumu silme işlemi için tetiklenen fonksiyon
+		function CommentDelete(commetId) {
+			let dialogResult = confirm('Yorumu Silemk İstiyor Musunuz?');
+
+			if (!dialogResult)
+				return false;
+
+			$.ajax({
+				type: 'GET',
+				url: '/Comment/Delete/' + commetId,
+				//dataType: 'application/json', // JSON.stringify();
+				//data: { text: metin },
+				success: function (data) {
+					if (data.result) {
+						// Modal-body kısmına yorumlar tekrardan yükleniyor
+						$(modalYorumlarBodyId).load('/Comment/ShowNoteComments/' + noteId);
+					}
+					else {
+						alert('Yorum Silinemedi!');
+					}
+				},
+				error: function () {
+					alert('Sunucuya Erişilemedi!');
+				}
+			});
+		}
+
+		// 'BootsrapHelper.ModalPopup' ile sayfaya basılan modal'e yeni bir commet ekleme işlemini tetikleyen fonksiyon
+		function CommentInsert(commentText) {
+			let dialogResult = confirm('Yorumunuzu Onaylıyor Musunuz?');
+
+			if (!dialogResult)
+				return false;
+
+			$.ajax({
+				type: 'POST',
+				url: '/Comment/Insert',
+				//dataType: 'application/json', // JSON.stringify();
+				data: { 'text': commentText, 'noteId': noteId},
+				success: function (data) {
+					if (data.result) {
+						// Modal-body kısmına yorumlar tekrardan yükleniyor
+						$(modalYorumlarBodyId).load('/Comment/ShowNoteComments/' + noteId);
+					}
+					else {
+						alert('Yorum Eklenemedi!');
+					}
+				},
+				error: function () {
+					alert('Sunucuya Erişilemedi!');
+				}
+			});
+		}
+	</script>
+}

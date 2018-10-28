@@ -170,7 +170,9 @@ namespace Everynote.DataAccessLayer.EntityFramework
 							Note = note,
 							Owner = (k % 2 == 0) ? userList[0] : userList[1],
 							CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-2), DateTime.Now),
-							CreatedUserName = (k % 2 == 0) ? userList[0].UserName : userList[1].UserName
+							CreatedUserName = (k % 2 == 0) ? userList[0].UserName : userList[1].UserName,
+							ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
+							ModifiedUserName = (k % 2 == 0) ? userList[0].UserName : userList[1].UserName
 						};
 
 						note.Comments.Add(comment);
