@@ -1,76 +1,210 @@
 ﻿@model IEnumerable<Everynote.Entities.Note>
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Text)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDraft)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LikeCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedUserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedUserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+	<div class="col-md-12 col-md-offset-1">
+		<h2>Notlar</h2>
+	</div>
+</div>
+<hr />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Text)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDraft)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LikeCount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedUserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedUserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ModifiedOn)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+<div class="row">
+	<div class="col-md-12">
+		<p>
+			@Html.ActionLink("Create New", "Create", "Note", new { @class = "btn btn-primary" })
+		</p>
+		<table class="table">
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Title)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Text)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.IsDraft)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.LikeCount)
+				</th>
+				<th width="130px"></th>
+			</tr>
+
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.Title)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.Text)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.IsDraft)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.LikeCount)
+					</td>
+					<td>
+						<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal-yorumlar" data-note-id="@item.Id">
+							<span class="glyphicon glyphicon-comment"></span>
+						</button>
+
+						@BootsrapHelper.LinkButton(url: "/Note/Edit/" + item.Id,
+															   addtionalClass: "btn-warning",
+															   title: "Edit",
+															   icon: "edit",
+															   text: string.Empty)
+
+						@BootsrapHelper.LinkButton(url: "/Note/Details/" + item.Id,
+															   addtionalClass: "btn-info",
+															   title: "Details",
+															   icon: "search",
+															   text: string.Empty)
+
+						@BootsrapHelper.LinkButton(url: "/Note/Delete/" + item.Id,
+												   addtionalClass: "btn-danger",
+												   title: "Delete",
+												   icon: "trash",
+												   text: string.Empty)
+					</td>
+				</tr>
+			}
+
+		</table>
+	</div>
+</div>
+
+@BootsrapHelper.ModalPopup(id: "modal-yorumlar", title: "Yorumlar") @*Yorumların gösterileceği modal'ın ekrana eklenmesini sağlayan helper çağırılıyor*@
+
+
+@section scripts{
+	<script type="text/javascript">
+		let modalYorumlarBodyId = '#modal-yorumlar-body';
+		let noteId = 0;
+
+		// Helper ile ekrana basılan modal'ın açılması tetiklendiğinde tetiklenen JS kodu
+		$('#modal-yorumlar').on('show.bs.modal', function (e) {
+			//alert('Modal show event yakalandı! |:--->');
+			let btn = $(e.relatedTarget);
+			noteId = btn.data('note-id');
+
+			$(modalYorumlarBodyId).load('/Comment/ShowNoteComments/' + noteId);
+		})
+
+		// 'BootsrapHelper.ModalPopup' ile sayfaya basılan modal'deki her bir yorumun güncelleme butonuna basılınca tetiklenen fonksiyon
+		function CommentEdit(commentButtonProtorip, commetId) {
+			let thisButton = $(commentButtonProtorip); // gelen JS button propotip'i JQuery propotip'ine çevriliyor
+			//let actionMode = thisButton.data('edit-mode');
+
+			// Bu buton çift yönlü çalışacak ilk tıklamada 'comment-text' değeri güncellenebilir hale getirilecek,
+			// ikinci tıklamada işle tersine cevrilecek.
+			if (!thisButton.data('edit-mode')) {
+				thisButton.data('edit-mode', true);
+
+				thisButton.removeClass('btn-warning');
+				thisButton.addClass('btn-success');
+
+				let thisSpan = thisButton.find('span');
+				thisSpan.removeClass('glyphicon-edit');
+				thisSpan.addClass('glyphicon-ok');
+
+				$('#comment-text-' + commetId).attr('contenteditable', true);
+				$('#comment-text-' + commetId).focus();
+			}
+			else {
+				thisButton.data('edit-mode', false);
+
+				thisButton.removeClass('btn-success');
+				thisButton.addClass('btn-warning');
+
+				let thisSpan = thisButton.find('span');
+				thisSpan.removeClass('glyphicon-ok');
+				thisSpan.addClass('glyphicon-edit');
+
+				$('#comment-text-' + commetId).attr('contenteditable', false);
+
+				// back-end tarafına edit için çağrıda bulunulması
+				let metin = document.getElementById('comment-text-' + commetId).innerHTML.trim(); //$('comment-text-' + commetId).text();
+				$.ajax({
+					type: 'POST',
+					url: '/Comment/Edit/' + commetId,
+					//dataType: 'application/json', // JSON.stringify();
+					data: { text: metin },
+					success: function (data) {
+						if (data.result) {
+							// Modal-body kısmına yorumlar tekrardan yükleniyor
+							$(modalYorumlarBodyId).load('/Comment/ShowNoteComments/' + noteId);
+						}
+						else {
+							alert('Yorum Güncellenemedi!');
+						}
+					},
+					error: function () {
+						alert('Sunucuya Erişilemedi!');
+					}
+				});
+			}
+
+		}
+
+		// 'BootsrapHelper.ModalPopup' ile sayfaya basılan modal'deki her bir yorumu silme işlemi için tetiklenen fonksiyon
+		function CommentDelete(commetId) {
+			let dialogResult = confirm('Yorumu Silemk İstiyor Musunuz?');
+
+			if (!dialogResult)
+				return false;
+
+			$.ajax({
+				type: 'GET',
+				url: '/Comment/Delete/' + commetId,
+				//dataType: 'application/json', // JSON.stringify();
+				//data: { text: metin },
+				success: function (data) {
+					if (data.result) {
+						// Modal-body kısmına yorumlar tekrardan yükleniyor
+						$(modalYorumlarBodyId).load('/Comment/ShowNoteComments/' + noteId);
+					}
+					else {
+						alert('Yorum Silinemedi!');
+					}
+				},
+				error: function () {
+					alert('Sunucuya Erişilemedi!');
+				}
+			});
+		}
+
+		// 'BootsrapHelper.ModalPopup' ile sayfaya basılan modal'e yeni bir commet ekleme işlemini tetikleyen fonksiyon
+		function CommentInsert(commentText) {
+			let dialogResult = confirm('Yorumunuzu Onaylıyor Musunuz?');
+
+			if (!dialogResult)
+				return false;
+
+			$.ajax({
+				type: 'POST',
+				url: '/Comment/Insert',
+				//dataType: 'application/json', // JSON.stringify();
+				data: { 'text': commentText, 'noteId': noteId},
+				success: function (data) {
+					if (data.result) {
+						// Modal-body kısmına yorumlar tekrardan yükleniyor
+						$(modalYorumlarBodyId).load('/Comment/ShowNoteComments/' + noteId);
+					}
+					else {
+						alert('Yorum Eklenemedi!');
+					}
+				},
+				error: function () {
+					alert('Sunucuya Erişilemedi!');
+				}
+			});
+		}
+	</script>
 }
-
-</table>

@@ -153,5 +153,66 @@ namespace Everynote.Mvc.Controllers
 			return RedirectToAction("Index");
 		}
 
+		// Geriye, giriş yapmış olan kullanıcının UI kısmında listelenen notlardan beğendiklerinin id listesini döndüren metod
+		[HttpPost]
+		public ActionResult GetLiked(int[] IdArrays)
+		{
+			if (CurrentSession.User != null)
+			{
+				List<int> liketNoteIds = likedManager.List(
+								q => q.LikedUser.Id == CurrentSession.User.Id &&
+								IdArrays.Contains(q.Note.Id)).
+								Select(q => q.Note.Id).ToList();
+
+				return Json(new { result = liketNoteIds });
+			}
+			return Json(new { result = new List<int>() });
+		}
+
+		// Like-Dislike işlemlerini yönetmek için kullanılan metod
+		[HttpPost]
+		public ActionResult GetLikeState(int noteId, bool likedState)
+		{
+			int result = 0;
+
+			if (CurrentSession.User != null)
+			{
+				#region DB'de like-dislike işlemlerinin işlenmesi
+				Liked liked = likedManager.Find(q => q.Note.Id == noteId && q.LikedUser.Id == CurrentSession.User.Id);
+				Note note = noteManager.Find(q => q.Id == noteId);
+
+				if ((note != null && liked != null) && likedState == false)
+				{
+					result = likedManager.Delete(liked);
+				}
+				else  if ((note != null && liked == null) && likedState == true)
+				{
+					result = likedManager.Insert(new Liked {
+						LikedUser = CurrentSession.User,
+						Note = note,
+					});
+				}
+				#endregion
+
+				#region LikeCount değerini ayarlama
+				if (note != null && result > 0)
+				{
+					if (likedState)
+					{
+						note.LikeCount++;
+					}
+					else
+					{
+						note.LikeCount--;
+					}
+					result = noteManager.Update(note);
+					
+					return Json(new { hasError = false, errorMessage = string.Empty, likeCount = note.LikeCount });
+				}
+				#endregion
+			}
+			return Json(new { hasError = true, errorMessage = "Beğenme işlemide hata oluştu!", likeCount = 0 });
+		}
+
 	}
 }

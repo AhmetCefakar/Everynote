@@ -126,6 +126,21 @@ namespace Everynote.DataAccessLayer.EntityFramework
 					Password = "abc",
 					CreatedOn = DateTime.Now,
 					CreatedUserName = "System",
+				},
+				new User
+				{
+					Name = "Pelin",
+					Surname = "Haybena",
+					Gender = Gender.Woman,
+					ProfileImageFileName = "userWoman.png",
+					Email = "pelinhaybena@hotmail.com",
+					ActivateGuid = Guid.NewGuid(),
+					IsActive = true,
+					IsAdmin = false,
+					UserName = "pelin",
+					Password = "abc",
+					CreatedOn = DateTime.Now,
+					CreatedUserName = "System",
 				}
 			};
 			context.EverynoteUser.AddRange(userList);
@@ -147,14 +162,16 @@ namespace Everynote.DataAccessLayer.EntityFramework
 				// Adding notes
 				for (int j = 0; j < FakeData.NumberData.GetNumber(2, 9); j++)
 				{
+					User noteOwner = userList[FakeData.NumberData.GetNumber(0, userList.Count - 1)];
+					
 					Note note = new Note
 					{
 						Title = FakeData.TextData.GetAlphabetical(FakeData.NumberData.GetNumber(5, 30)),
 						Text = FakeData.TextData.GetSentences(FakeData.NumberData.GetNumber(1, 5)),
 						Category = category,
 						IsDraft = false,
-						LikeCount = FakeData.NumberData.GetNumber(1, 5),
-						Owner = (j % 2 == 0) ? userList[0] : userList[1],
+						LikeCount = FakeData.NumberData.GetNumber(0, 6),
+						Owner = noteOwner,
 						CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-2), DateTime.Now),
 						CreatedUserName = (j % 2 == 0) ? userList[0].UserName : userList[1].UserName,
 						ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now)
@@ -164,11 +181,13 @@ namespace Everynote.DataAccessLayer.EntityFramework
 					// Adding comments
 					for (int k = 0; k < FakeData.NumberData.GetNumber(1, 5); k++)
 					{
+						User commentOwner = userList[FakeData.NumberData.GetNumber(0, userList.Count - 1)];
+						
 						Comment comment = new Comment
 						{
 							Text = FakeData.TextData.GetSentence(),
 							Note = note,
-							Owner = (k % 2 == 0) ? userList[0] : userList[1],
+							Owner = commentOwner,
 							CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-2), DateTime.Now),
 							CreatedUserName = (k % 2 == 0) ? userList[0].UserName : userList[1].UserName,
 							ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
@@ -179,11 +198,11 @@ namespace Everynote.DataAccessLayer.EntityFramework
 					}
 
 					// Adding fake likes
-					for (int k = 0; k < FakeData.NumberData.GetNumber(1, 5); k++)
+					for (int k = 0; k < note.LikeCount; k++)
 					{
 						Liked liked = new Liked
 						{
-							LikedUser = (k % 2 == 0) ? userList[0] : userList[1]
+							LikedUser = userList[k]
 						};
 						note.Likes.Add(liked);
 					}

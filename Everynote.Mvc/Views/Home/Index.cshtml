@@ -44,11 +44,11 @@
 				</div>
 			</div>
 			<div class="row">
-				@foreach (var NoteItem in Model)
+				@foreach (Note NoteItem in Model)
 				{
-					<div class="col-sm-4 col-lg-4 col-md-4">
+					<div class="col-sm-4 col-lg-4 col-md-4" data-note-id="@NoteItem.Id">
 						<div class="thumbnail">
-							<img src="http://placehold.it/320x150" alt="">
+							<img src="http://placehold.it/320x150" alt="@NoteItem.Title">
 							<div class="caption">
 								<h6 class="text-right">
 									@NoteItem.CreatedOn.ToString("dd.MM.yyyy HH:mm") <span class="glyphicon glyphicon-time"></span><br />
@@ -69,7 +69,6 @@
 								else
 								{
 									<p>@NoteItem.Text</p>
-
 								}
 
 							</div>
@@ -81,8 +80,9 @@
 									</button>
 								</p>
 								<p>
-									<button class="btn btn-default">
-										<span class="glyphicon glyphicon-star-empty"></span> @NoteItem.LikeCount
+									<button class="btn btn-default btn-sm" type="button" data-note-id="@NoteItem.Id" data-liked="false">
+										<span class="glyphicon glyphicon-star-empty"></span>&nbsp;
+										<span class="like-count">@NoteItem.LikeCount</span>
 									</button>
 								</p>
 							</div>
@@ -213,7 +213,7 @@
 				type: 'POST',
 				url: '/Comment/Insert',
 				//dataType: 'application/json', // JSON.stringify();
-				data: { 'text': commentText, 'noteId': noteId},
+				data: { 'text': commentText, 'noteId': noteId },
 				success: function (data) {
 					if (data.result) {
 						// Modal-body kısmına yorumlar tekrardan yükleniyor
@@ -228,5 +228,91 @@
 				}
 			});
 		}
+
+
+		// Sayfa yüklemesi bittikten sonra çalışacak kodlar yazılıyor(Yorumların like edilmesi işlemleri)
+		$(function () {
+
+			let noteIds = [];
+			$('div[data-note-id]').each(function (i, e) {
+				noteIds.push($(e).data('note-id'));
+			});
+
+			// Bu ajax çağrısı metod dışında kullanıldı(sayfadaki noteIds listesi back-end'e gönderilecek ve geriye bu listeden login olan kullanıcının beğendiği notların listesi dönecek)
+			$.ajax({
+				type: 'POST',
+				url: '/Note/GetLiked',
+				//dataType: 'application/json', // JSON.stringify();
+				data: { 'IdArrays': noteIds },
+				success: function (data) {
+					console.log(data);
+					if (data.result != null && data.result.length) {
+						console.log('Note id list: ' + noteIds.length + '\n' + noteIds);
+						// Liked olan notların UI tarafında görsel olarak belirtilmesini sağlayan döngü
+						for (var i = 0; i < data.result.length; i++) {
+							let id = data.result[i];
+							let likedNote = $('div[data-note-id=' + id + ']');
+							let likedBtn = likedNote.find('button[data-liked]');
+							let span = likedBtn.children().first();
+
+							likedBtn.data('liked', true);
+							span.removeClass('glyphicon-star-empty');
+							span.addClass('glyphicon-star');
+						}
+						console.log('Liked note list: ' + data.result.length + '\n' + data.result);
+					}
+					else {
+						//alert('Yorum Eklenemedi!');
+						console.log('Beğenilen not listesi sunucudan alınamadı!');
+					}
+				},
+				error: function () {
+					//alert('Sunucuya Erişilemedi!');
+					console.log('Sunucuya Erişilemedi!');
+				}
+			});
+
+
+			// Like-Dislike durumlarını yönetmek için çalıştırılacak olan metod
+			$('button[data-liked]').click(function () {
+				let thisBtn = $(this); // JS tanımlı buttun prototip'inin JQuery nesnesine çevrilmesi
+				let likedValue = thisBtn.data('liked');
+				let noteIdValue = thisBtn.data('note-id');
+				let thisSpanLike = thisBtn.children().first();
+				let thisSpanCount = thisBtn.children().last();
+
+				$.ajax({
+					type: 'POST',
+					url: '/Note/GetLikeState',
+					//dataType: 'application/json', // JSON.stringify();
+					data: { 'noteId': noteIdValue, 'likedState': !likedValue },
+					success: function (data) {
+						console.log('Like Count(before): ' + thisSpanCount.text());
+
+						if (data != null && data.hasError == false) {
+							thisBtn.data('liked', !likedValue);
+							thisSpanCount.text(data.likeCount);
+
+							thisSpanLike.removeClass('glyphicon-star');
+							thisSpanLike.removeClass('glyphicon-star-empty');
+
+							if (!likedValue) {
+								thisSpanLike.addClass('glyphicon-star');
+							}
+							else {
+								thisSpanLike.addClass('glyphicon-star-empty');
+							}
+						}
+						else {
+							alert('Beğenme durumu değiştirilemedi!');
+						}
+						console.log('Like Count(after): ' + thisSpanCount.text());
+					},
+					error: function () {
+						alert('Sunucuya Erişilemedi!');
+					}
+				});
+			});
+		});
 	</script>
 }
