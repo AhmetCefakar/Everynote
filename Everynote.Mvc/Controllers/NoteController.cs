@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Everynote.BusinessLayer;
 using Everynote.Entities;
+using Everynote.Mvc.Filter;
 using Everynote.Mvc.Models;
 
 namespace Everynote.Mvc.Controllers
@@ -19,6 +20,7 @@ namespace Everynote.Mvc.Controllers
 		LikedManager likedManager = new LikedManager();
 
 		// GET: Notes
+		[UserAuthentication]
 		public ActionResult Index()
 		{
 			var notes = noteManager.ListQueryable()
@@ -31,6 +33,7 @@ namespace Everynote.Mvc.Controllers
 		}
 
 		// GET: Liked Notes
+		[UserAuthentication]
 		public ActionResult MyLikedNotes()
 		{
 			// likedNotes listesinin çekilmesinin sağlayan linq sorgusu
@@ -63,6 +66,7 @@ namespace Everynote.Mvc.Controllers
 		}
 
 		// GET: Notes/Create
+		[UserAuthentication]
 		public ActionResult Create()
 		{
 			ViewBag.CategoryId = new SelectList(CacheHelper.GetCategoriesFromCache(), "Id", "Title");
@@ -74,6 +78,7 @@ namespace Everynote.Mvc.Controllers
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[UserAuthentication]
 		public ActionResult Create(Note note)
 		{
 			ModelState.Remove("CreatedUserName");
@@ -90,6 +95,7 @@ namespace Everynote.Mvc.Controllers
 		}
 
 		// GET: Notes/Edit/5
+		[UserAuthentication]
 		public ActionResult Edit(int? id)
 		{
 			if (id == null)
@@ -110,6 +116,7 @@ namespace Everynote.Mvc.Controllers
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[UserAuthentication]
 		public ActionResult Edit(Note note)
 		{
 			ModelState.Remove("CreatedUserName");
@@ -122,6 +129,8 @@ namespace Everynote.Mvc.Controllers
 				noteModelFromDB.Text = note.Text;
 				noteModelFromDB.Title = note.Title;
 
+				noteManager.Update(noteModelFromDB); // DB'de note değerinin güncellenmesi
+
 				return RedirectToAction("Index");
 			}
 			ViewBag.CategoryId = new SelectList(CacheHelper.GetCategoriesFromCache(), "Id", "Title", note.CategoryId);
@@ -129,6 +138,7 @@ namespace Everynote.Mvc.Controllers
 		}
 
 		// GET: Notes/Delete/5
+		[UserAuthentication]
 		public ActionResult Delete(int? id)
 		{
 			if (id == null)
@@ -146,6 +156,7 @@ namespace Everynote.Mvc.Controllers
 		// POST: Notes/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
+		[UserAuthentication]
 		public ActionResult DeleteConfirmed(int id)
 		{
 			Note note = noteManager.Find(q => q.Id == id);
@@ -155,6 +166,7 @@ namespace Everynote.Mvc.Controllers
 
 		// Geriye, giriş yapmış olan kullanıcının UI kısmında listelenen notlardan beğendiklerinin id listesini döndüren metod
 		[HttpPost]
+		[UserAuthentication]
 		public ActionResult GetLiked(int[] IdArrays)
 		{
 			if (CurrentSession.User != null)
@@ -171,6 +183,7 @@ namespace Everynote.Mvc.Controllers
 
 		// Like-Dislike işlemlerini yönetmek için kullanılan metod
 		[HttpPost]
+		[UserAuthentication]
 		public ActionResult GetLikeState(int noteId, bool likedState)
 		{
 			int result = 0;
@@ -214,5 +227,21 @@ namespace Everynote.Mvc.Controllers
 			return Json(new { hasError = true, errorMessage = "Beğenme işlemide hata oluştu!", likeCount = 0 });
 		}
 
+		// Geriye ilgili notun detayını döndüren metod
+		public ActionResult GetNoteContent(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Note note = noteManager.Find(q => q.Id == id.Value);
+			if (note == null)
+			{
+				return HttpNotFound();
+			}
+			
+			return PartialView("_PartialNoteContent", note);
+		}
+		
 	}
 }

@@ -55,7 +55,7 @@
 									@NoteItem.CreatedUserName <span class="glyphicon glyphicon-user"></span>
 								</h6>
 								<h4>
-									<a href="#">@NoteItem.Title</a>
+									<a href="" data-toggle="modal" data-target="#modal-note-detail" data-note-id="@NoteItem.Id">@NoteItem.Title</a>
 								</h4>
 								<hr style="margin:2px 0;" />
 
@@ -63,7 +63,9 @@
 								{
 									<p>@(NoteItem.Text.Substring(0, 90) + "...")</p>
 									<p class="pull-right">
-										<a href="" class="btn btn-default btn-sm">Devamı <span class="glyphicon glyphicon-chevron-right"></span></a>
+										<a href="" data-toggle="modal" data-target="#modal-note-detail" data-note-id="@NoteItem.Id" class="btn btn-default btn-sm" >
+											Devamı <span class="glyphicon glyphicon-chevron-right"></span>
+										</a>
 									</p>
 								}
 								else
@@ -103,6 +105,7 @@
 </div>
 
 @BootsrapHelper.ModalPopup(id: "modal-yorumlar", title: "Yorumlar") @*Yorumların gösterileceği modal'ın ekrana eklenmesini sağlayan helper çağırılıyor*@
+@BootsrapHelper.ModalPopup(id: "modal-note-detail", title: "Note Detayı") @*Note detayının gösterileceği modal'ın ekrana eklenmesini sağlayan helper çağırılıyor*@
 
 
 @section scripts{
@@ -110,13 +113,13 @@
 		let modalYorumlarBodyId = '#modal-yorumlar-body';
 		let noteId = 0;
 
-		// Helper ile ekrana basılan modal'ın açılması tetiklendiğinde tetiklenen JS kodu
+		// Helper ile ekrana basılan 'modal-yorumlar' isimli modal'ın açılması tetiklendiğinde tetiklenen JS kodu
 		$('#modal-yorumlar').on('show.bs.modal', function (e) {
 			//alert('Modal show event yakalandı! |:--->');
 			let btn = $(e.relatedTarget);
 			noteId = btn.data('note-id');
 
-			$(modalYorumlarBodyId).load('/Comment/ShowNoteComments/' + noteId);
+			$(modalYorumlarBodyId).load('/Comment/ShowNoteComments/' + noteId); // Bu JQuery kodu '/Comment/ShowNoteComments/' metodundan dönen veriyi ilgili elemana html içeriği olarak basıyor
 		})
 
 		// 'BootsrapHelper.ModalPopup' ile sayfaya basılan modal'deki her bir yorumun güncelleme butonuna basılınca tetiklenen fonksiyon
@@ -229,6 +232,14 @@
 			});
 		}
 
+
+		// Helper ile ekrana basılan 'modal-note-detail' isimli modal'ın açılması tetiklendiğinde tetiklenen JS kodu
+		$('#modal-note-detail').on('show.bs.modal', function (e) {
+			let btn = $(e.relatedTarget);
+			noteId = btn.data('note-id');
+
+			$('#modal-note-detail-body').load('/Note/GetNoteContent/' + noteId);
+		})
 
 		// Sayfa yüklemesi bittikten sonra çalışacak kodlar yazılıyor(Yorumların like edilmesi işlemleri)
 		$(function () {

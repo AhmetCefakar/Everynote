@@ -3,6 +3,7 @@ using Everynote.BusinessLayer.Result;
 using Everynote.Entities;
 using Everynote.Entities.DTO;
 using Everynote.Entities.Messages;
+using Everynote.Mvc.Filter;
 using Everynote.Mvc.Models;
 using System;
 using System.Collections.Generic;
@@ -130,12 +131,14 @@ namespace Everynote.Mvc.Controllers
 
 		#region Admin İşlemleri
 		// GET: Users
+		[UserAuthentication]
 		public ActionResult Index()
 		{
 			return View(userManager.List());
 		}
 
 		// GET: Users/Details/5
+		[UserAuthentication]
 		public ActionResult Details(int? id)
 		{
 			if (id == null)
@@ -151,6 +154,7 @@ namespace Everynote.Mvc.Controllers
 		}
 
 		// GET: Users/Create
+		[UserAuthentication]
 		public ActionResult Create()
 		{
 			return View();
@@ -161,6 +165,7 @@ namespace Everynote.Mvc.Controllers
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[UserAuthentication]
 		public ActionResult Create(User user)
 		{
 			ModelState.Remove("CreatedUserName");
@@ -181,6 +186,7 @@ namespace Everynote.Mvc.Controllers
 		}
 
 		// GET: Users/Edit/5
+		[UserAuthentication]
 		public ActionResult Edit(int? id)
 		{
 			if (id == null)
@@ -200,6 +206,7 @@ namespace Everynote.Mvc.Controllers
 		// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[UserAuthentication]
 		public ActionResult Edit([Bind(Include = "Id,Name,Surname,Gender,UserName,Password,Email,ProfileImageFileName,IsActive,IsAdmin")] User user)
 		{
 			if (ModelState.IsValid)
@@ -218,6 +225,7 @@ namespace Everynote.Mvc.Controllers
 		}
 
 		// GET: Users/Delete/5
+		[UserAuthentication]
 		public ActionResult Delete(int? id)
 		{
 			if (id == null)
@@ -235,6 +243,7 @@ namespace Everynote.Mvc.Controllers
 		// POST: Users/Delete/5
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
+		[UserAuthentication]
 		public ActionResult DeleteConfirmed(int id)
 		{
 			// Todo: Silme işleminde kayıt silinmeden pasife çekilecek şekilde ayarlanmalıdır

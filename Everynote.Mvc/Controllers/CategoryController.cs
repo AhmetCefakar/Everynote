@@ -8,10 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using Everynote.BusinessLayer;
 using Everynote.Entities;
+using Everynote.Mvc.Filter;
 using Everynote.Mvc.Models;
 
 namespace Everynote.Mvc.Controllers
 {
+	[UserAuthentication]
+	[AdminAuthentication]
 	public class CategoryController : Controller
 	{
 		private readonly CategoryManager categoryManager = new CategoryManager();

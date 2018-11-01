@@ -1,5 +1,6 @@
 ﻿using Everynote.BusinessLayer;
 using Everynote.Entities;
+using Everynote.Mvc.Filter;
 using Everynote.Mvc.Models;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,10 @@ namespace Everynote.Mvc.Controllers
 
             return PartialView("_PartialComments", note.Comments);
         }
-
+		
 		// Post: Comment edit işlemini yapan metod
 		[HttpPost]
+		[UserAuthentication]
 		public ActionResult Edit(int? id, string text)
 		{
 			if (id == null)
@@ -61,6 +63,7 @@ namespace Everynote.Mvc.Controllers
 
 		// Post: Comment edit işlemini yapan metod
 		[HttpGet]
+		[UserAuthentication]
 		public ActionResult Delete(int? id)
 		{
 			if (id == null)
@@ -84,6 +87,7 @@ namespace Everynote.Mvc.Controllers
 
 		// Post: Comment edit işlemini yapan metod
 		[HttpPost]
+		[UserAuthentication]
 		public ActionResult Insert(string text, int noteId)
 		{
 			ModelState.Remove("CreatedOn");

@@ -146,6 +146,8 @@
     <Compile Include="Controllers\NoteController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Filter\AdminAuthentication.cs" />
+    <Compile Include="Filter\UserAuthentication.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -186,6 +188,7 @@
     <Content Include="Views\Note\Edit.cshtml" />
     <Content Include="Views\Note\Index.cshtml" />
     <Content Include="Views\Shared\_PartialComments.cshtml" />
+    <Content Include="Views\Shared\_PartialNoteContent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -2,6 +2,7 @@
 using Everynote.BusinessLayer.Result;
 using Everynote.Entities;
 using Everynote.Entities.Messages;
+using Everynote.Mvc.Filter;
 using Everynote.Mvc.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ using System.Web.Mvc;
 
 namespace Everynote.Mvc.Controllers
 {
-    public class ProfileController : Controller
+	[UserAuthentication]
+	public class ProfileController : Controller
     {
 		/// <summary>
 		/// Kullanıcının Profil Sayfasını Açan Action

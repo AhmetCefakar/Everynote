@@ -21,8 +21,10 @@ namespace Everynote.Mvc.Controllers
 			// Veritabanını yoksa oluşturan metod çağırılıyor
 			//BusinessLayer.Test test = new BusinessLayer.Test();
 			//test.CommetInsertTest();
-			
-			return View(noteManager.GetAllNotesQueryable().OrderByDescending(q => q.CreatedOn).ToList());
+
+			var deger = noteManager.GetAllNotesQueryable().Where(q => q.IsDraft == false).OrderByDescending(q => q.CreatedOn);
+
+			return View(deger.ToList());
 		}
 
 		// GET: Bu action kendine gelen id değerine göre bu kategori değerine sahip olan notları listelemek için BLL katmanından aldığı modeli
@@ -41,7 +43,7 @@ namespace Everynote.Mvc.Controllers
 				return HttpNotFound();
 			}
 
-			return View("Index", category.Notes.OrderByDescending(q => q.CreatedOn).ToList());
+			return View("Index", category.Notes.Where(q => q.IsDraft == false).OrderByDescending(q => q.CreatedOn).ToList());
 		}
 
 		// GET: En çok beğenilenler notların listesini döndüren action
